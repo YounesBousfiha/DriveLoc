@@ -5,13 +5,13 @@ CREATE  DATABASE IF NOT EXISTS DriveLoc;
 USE DriveLoc;
 
 CREATE TABLE IF NOT EXISTS roles (
-    role_id int NOT NULL,
+    role_id int NOT NULL AUTO_INCREMENT,
     role_name varchar(100),
     PRIMARY KEY(role_id)
 );
 
 CREATE TABLE IF NOT EXISTS users (
-    user_id int NOT NULL,
+    user_id int NOT NULL AUTO_INCREMENT,
     nom varchar(100) NOT NULL,
     prenom varchar(100) NOT NULL,
     email varchar(100) UNIQUE NOT NULL,
@@ -23,14 +23,14 @@ CREATE TABLE IF NOT EXISTS users (
 
 
 CREATE TABLE IF NOT EXISTS categories (
-    categorie_id int NOT NULL,
+    categorie_id int NOT NULL AUTO_INCREMENT,
     categorie_nom varchar(100),
     PRIMARY KEY(categorie_id)
 );
 
 
 CREATE TABLE IF NOT EXISTS vehicules (
-    vehicule_id int NOT NULL,
+    vehicule_id int NOT NULL AUTO_INCREMENT,
     vehicule_prix DECIMAL NOT NULL,
     vehicule_disponibilite ENUM('Available', 'NonAvailable') DEFAULT 'Available',
     vehicule_marque varchar(100) NOT NULL, -- peut etre normalisé
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS vehicules (
 );
 
 CREATE TABLE IF NOT EXISTS reservation (
-    reservation_id int NOT NULL,
+    reservation_id int NOT NULL AUTO_INCREMENT,
     reservation_status ENUM('Pending', 'Approuve', 'Reject') DEFAULT 'Pending',
     reservation_date DATE NOT NULL,
     reservation_lieux varchar(255) NOT NULL,
@@ -56,8 +56,8 @@ CREATE TABLE IF NOT EXISTS reservation (
 );
 
 CREATE TABLE IF NOT EXISTS avis (
-    avis_id int NOT NULL,
-    avis_content varchar(255) NOT NULL,
+    avis_id int NOT NULL AUTO_INCREMENT,
+    avis_rating int NOT NULL,
     fk_user_id int NOT NULL,
     fk_vehicule_id int NOT NULL,
     PRIMARY KEY(avis_id),
