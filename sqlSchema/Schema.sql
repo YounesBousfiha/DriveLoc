@@ -57,6 +57,7 @@ CREATE TABLE IF NOT EXISTS reservation (
 
 CREATE TABLE IF NOT EXISTS avis (
     avis_id int NOT NULL,
+    avis_content varchar(255) NOT NULL,
     fk_user_id int NOT NULL,
     fk_vehicule_id int NOT NULL,
     PRIMARY KEY(avis_id),
