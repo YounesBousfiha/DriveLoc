@@ -1,0 +1,15 @@
+{
+    "name": "younes/drive-loc",
+    "autoload": {
+        "psr-4": {
+            "Younes\\DriveLoc\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Coderyounes",
+            "email": "younesanas2021@gmail.com"
+        }
+    ],
+    "require": {}
+}

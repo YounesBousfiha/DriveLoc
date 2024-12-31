@@ -49,8 +49,39 @@ class Auth {
         }
     }
 
-    public function login() {}
+    public function login($email, $password)
+    {
+        $isExist = $this->isExist($email);
+        if ($isExist) {
+            $sql = "SELECT * FROM Users WHERE Email = :Email";
 
+            try {
+                $stm = $this->db->prepare($sql);
+                $stm->bindValue(':Email', $email);
+                if ($stm->execute()) {
+                    $data = $stm->fetch(PDO::FETCH_ASSOC);
+                    if (password_verify($password, $data['Password'])) {
+                        $token = Helpers::generateToken();
+                        setcookie("auth_token", $token, time() + 3600, '/');
+                        $sql = "UPDATE Users SET Token = :Token WHERE Email = :Email";
+                        $stm = $this->db->prepare($sql);
+                        $stm->bindValue(':Token', $token);
+                        $stm->bindValue(':Email', $email);
+                        $stm->execute();
+                        if ($data['Id_role'] == 1) {
+                            header("Location: ../dashboard.php");
+                        } else {
+                            header("Location: ../home.php");
+                        }
+                    }
+                }
+            } catch (Exception $e) {
+                echo "Error : " . $e->getMessage();
+            }
+        } else {
+            return "Email or Password are incorrect";
+        }
+    }
     public function validateUser() {}
     public function isLoggedIn() {}
     public function logout() {}
