@@ -22,12 +22,20 @@ class Base {
     
         $stmt->execute();
     }
-    
-    public function update() {}
+
     public function delete() {}
-    public function all() {}
+    public function all() {
+        $sql = "SELECT * FROM {$this->table}";
+        $stmt = $this->db->prepare($sql);
+        if($stmt->execute()) {
+            return $stmt->fetchAll();
+        } else {
+            return null;
+        }
+    }
     public function find($id) {}
     public function where() {}
+    public function update() {}
 }
 
 ?>
