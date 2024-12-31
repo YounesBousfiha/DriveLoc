@@ -25,7 +25,8 @@ class Auth {
         return $isFound;
     }
 
-    public function signup($newuserInstance) {
+    public function signup($newuserInstance)
+    {
         $isExist = $this->isExist($newuserInstance->__get('email'));
         if(!$isExist) {
             $sql = "INSERT INTO Users (nom, prenom, email, password, fk_role_id) VALUES (:nom, :prenom, :email, :password, :fk_role_id)";
@@ -82,8 +83,38 @@ class Auth {
             return "Email or Password are incorrect";
         }
     }
-    public function validateUser() {}
-    public function isLoggedIn() {}
+
+    public function validateUser() {
+        $token = $_COOKIE['auth_token'];
+        if($token) {
+
+            $sql = "SELECT * FROM users WHERE token = :token";
+            try {
+                $stm = $this->db->prepare($sql);
+                $stm->bind_param(':token', $token);
+                if($stm->execute()) {
+                    $user = $stm->fetch();
+                    return $user;
+                } else {
+                    return null;
+                }
+            } catch (Exception $e)
+            {
+                echo "Error: " . $e->getMessage();
+            }
+        } else {
+            echo "Your are not Authenticated !";
+        }
+    }
+
+    public function isLoggedIn() {
+        $token = $_COOKIE['auth_token'];
+        if($token) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     public function logout() {}
 }
 
