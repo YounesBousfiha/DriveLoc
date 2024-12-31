@@ -23,7 +23,6 @@ class Base {
         $stmt->execute();
     }
 
-    public function delete() {}
     public function all() {
         $sql = "SELECT * FROM {$this->table}";
         $stmt = $this->db->prepare($sql);
@@ -33,9 +32,20 @@ class Base {
             return null;
         }
     }
-    public function find($id) {}
+
+    public function find($id) {
+        $sql = "SELECT * FROM {$this->table} WHERE {$this->table} . '_id' = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param(":id", $id);
+        if($stmt->execute()) {
+            return $stmt->fetch();
+        } else {
+            return null;
+        }
+    }
     public function where() {}
     public function update() {}
+    public function delete() {}
 }
 
 ?>
