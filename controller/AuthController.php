@@ -115,7 +115,11 @@ class Auth {
             return false;
         }
     }
-    public function logout() {}
+
+    public function logout() {
+        setcookie("auth_token", "", time() - 3600, '/');
+        Helpers::redirect('http://localhost:3000/index.php');
+    }
 }
 
 ?>
