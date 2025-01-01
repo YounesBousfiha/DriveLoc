@@ -43,9 +43,20 @@ class Base {
             return null;
         }
     }
+
+    public function delete($id) {
+        $sql = "SELECT * FROM {$this->table} WHERE {$this->table} . '_id' = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bind_param(":id", $id);
+        if($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function where() {}
     public function update() {}
-    public function delete() {}
 }
 
 ?>
