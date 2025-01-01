@@ -1,6 +1,7 @@
 <?php
 
-class Base {
+
+abstract class Base {
     private $db;
     private $table = null;
 

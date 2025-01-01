@@ -1,5 +1,10 @@
 <?php
 
+namespace Controller;
+
+use Exception; 
+use PDO; // or use backslash
+
 class Auth {
     private $db = null;
 

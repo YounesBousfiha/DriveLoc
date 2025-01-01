@@ -1,6 +1,11 @@
 <?php 
 
 
+namespace Config;
+
+use PDO;
+use PDOException;
+
 class DBConnection {
     private static $hasInstance = null;
     public $conn;
