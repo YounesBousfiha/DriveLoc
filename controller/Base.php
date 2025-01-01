@@ -55,8 +55,29 @@ class Base {
         }
     }
 
-    public function where() {}
-    public function update() {}
+    public function update($id, $data) {
+        $columns = [];
+        $params = [':id' => $id];
+    
+        foreach ($data as $key => $value) {
+            $columns[] = "$key = :$key";
+            $params[":$key"] = $value;
+        }
+    
+        $columns = implode(', ', $columns);
+        $sql = "UPDATE table_name SET $columns WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+    
+        foreach ($params as $param => $value) {
+            $stmt->bindValue($param, $value);
+        }
+    
+        if($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 
 ?>
