@@ -1,5 +1,6 @@
 <?php
 
+namespace Controller;
 
 abstract class Base {
     private $db;
