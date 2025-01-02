@@ -5,14 +5,14 @@ use Younes\DriveLoc\Controller\AdminController;
 
 require_once __DIR__ . '/../../../vendor/autoload.php';
 
+$db = DBConnection::getConnection()->conn;
+$admin = new AdminController($db);
 
-$admin = new AdminController(DBConnection::getConnection()->conn, 'vehicules');
-
-$data = $admin->all();
+$data = $admin->getAllVehicules();
 
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    var_dump($admin->delete($_POST['vehicule_id']));
+    var_dump($admin->deleteVehicule($_POST['vehicule_id']));
 }
 
 
