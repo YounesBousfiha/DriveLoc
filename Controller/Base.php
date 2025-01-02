@@ -36,9 +36,10 @@ abstract class Base {
     }
 
     public function find($id) {
-        $sql = "SELECT * FROM {$this->table} WHERE {$this->table} . '_id' = :id";
+        $column_name = substr($this->table, 0, -1);
+        $sql = "SELECT * FROM {$this->table} WHERE {$column_name}_id  = :id";
         $stmt = $this->db->prepare($sql);
-        $stmt->bind_param(":id", $id);
+        $stmt->bindValue(":id", $id);
         if($stmt->execute()) {
             return $stmt->fetch();
         } else {
@@ -47,9 +48,11 @@ abstract class Base {
     }
 
     public function delete($id) {
-        $sql = "SELECT * FROM {$this->table} WHERE {$this->table} . '_id' = :id";
+        $column_name = substr($this->table, 0, -1);
+        $sql = "DELETE FROM {$this->table} WHERE {$column_name}_id = :id";
+        var_dump($sql);
         $stmt = $this->db->prepare($sql);
-        $stmt->bind_param(":id", $id);
+        $stmt->bindValue(":id", $id);
         if($stmt->execute()) {
             return true;
         } else {
