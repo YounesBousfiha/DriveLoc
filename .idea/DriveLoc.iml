@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="WEB_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/Config" isTestSource="false" packagePrefix="Younes\DriveLoc\Config\" />
+      <sourceFolder url="file://$MODULE_DIR$/Controller" isTestSource="false" packagePrefix="Younes\DriveLoc\Controller\" />
+      <sourceFolder url="file://$MODULE_DIR$/Helpers" isTestSource="false" packagePrefix="Younes\DriveLoc\Helpers\" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
