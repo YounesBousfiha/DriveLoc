@@ -5,6 +5,7 @@
       <sourceFolder url="file://$MODULE_DIR$/Config" isTestSource="false" packagePrefix="Younes\DriveLoc\Config\" />
       <sourceFolder url="file://$MODULE_DIR$/Controller" isTestSource="false" packagePrefix="Younes\DriveLoc\Controller\" />
       <sourceFolder url="file://$MODULE_DIR$/Helpers" isTestSource="false" packagePrefix="Younes\DriveLoc\Helpers\" />
+      <sourceFolder url="file://$MODULE_DIR$/Model" isTestSource="false" packagePrefix="Younes\DriveLoc\Model\" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
     </content>
     <orderEntry type="inheritedJdk" />

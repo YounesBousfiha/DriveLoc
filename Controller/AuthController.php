@@ -5,15 +5,15 @@ namespace Younes\DriveLoc\Controller;
 use Younes\DriveLoc\Helpers\Helpers;
 
 use Exception; 
-use PDO; // or use backslash
+use PDO;
 
-class Auth {
-    private $db = null;
+trait AuthController {
+    private $db;
+    private $table = 'users';
 
-    public function __construct($db){
-        $this->db = $db; 
+    public function setDb($db) {
+        $this->db = $db;
     }
-
     public function isExist($email)
     {
         $isFound = false;
@@ -36,15 +36,15 @@ class Auth {
     {
         $isExist = $this->isExist($newuserInstance->__get('email'));
         if(!$isExist) {
-            $sql = "INSERT INTO Users (nom, prenom, email, password, fk_role_id) VALUES (:nom, :prenom, :email, :password, :fk_role_id)";
+            $sql = "INSERT INTO users (nom, prenom, email, password, fk_role_id) VALUES (:nom, :prenom, :email, :password, :fk_role_id)";
             $hashed_password = password_hash($newuserInstance->__get('password'), PASSWORD_DEFAULT);
             try {
                 $stm = $this->db->prepare($sql);
-                $stm->bindValue(':Nom', $newuserInstance->__get('nom'));
-                $stm->bindValue(':Prenom', $newuserInstance->__get('prenom'));
-                $stm->bindValue(':Email', $newuserInstance->__get('email'));
-                $stm->bindValue(':Password', $hashed_password);
-                $stm->bindValue(':Id_role', $newuserInstance->__get('role'));
+                $stm->bindValue(':nom', $newuserInstance->__get('nom'));
+                $stm->bindValue(':prenom', $newuserInstance->__get('prenom'));
+                $stm->bindValue(':email', $newuserInstance->__get('email'));
+                $stm->bindValue(':password', $hashed_password);
+                $stm->bindValue(':fk_role_id', $newuserInstance->__get('fk_role_id'));
                 if($stm->execute()) {
                     header("Location: LOGIN_PAGE"); 
                     return true;
@@ -61,7 +61,7 @@ class Auth {
     {
         $isExist = $this->isExist($email);
         if ($isExist) {
-            $sql = "SELECT * FROM Users WHERE Email = :Email";
+            $sql = "SELECT * FROM users WHERE Email = :Email";
 
             try {
                 $stm = $this->db->prepare($sql);
@@ -71,7 +71,7 @@ class Auth {
                     if (password_verify($password, $data['Password'])) {
                         $token = Helpers::generateToken();
                         setcookie("auth_token", $token, time() + 3600, '/');
-                        $sql = "UPDATE Users SET Token = :Token WHERE Email = :Email";
+                        $sql = "UPDATE users SET Token = :Token WHERE Email = :Email";
                         $stm = $this->db->prepare($sql);
                         $stm->bindValue(':Token', $token);
                         $stm->bindValue(':Email', $email);
