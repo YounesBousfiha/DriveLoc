@@ -2,6 +2,8 @@
 
 namespace Controller;
 
+use Helpers\Helpers;
+
 use Exception; 
 use PDO; // or use backslash
 
