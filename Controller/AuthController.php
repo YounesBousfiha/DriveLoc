@@ -46,7 +46,7 @@ trait AuthController {
                 $stm->bindValue(':password', $hashed_password);
                 $stm->bindValue(':fk_role_id', $newuserInstance->__get('fk_role_id'));
                 if($stm->execute()) {
-                    header("Location: LOGIN_PAGE"); 
+                    header("Location: http://localhost:63342/DriveLoc/pages/login.html");
                     return true;
                 }
             } catch (Exception $e) {
@@ -61,22 +61,22 @@ trait AuthController {
     {
         $isExist = $this->isExist($email);
         if ($isExist) {
-            $sql = "SELECT * FROM users WHERE Email = :Email";
+            $sql = "SELECT * FROM users WHERE email = :email";
 
             try {
                 $stm = $this->db->prepare($sql);
-                $stm->bindValue(':Email', $email);
+                $stm->bindValue(':email', $email);
                 if ($stm->execute()) {
                     $data = $stm->fetch(PDO::FETCH_ASSOC);
-                    if (password_verify($password, $data['Password'])) {
+                    if (password_verify($password, $data['password'])) {
                         $token = Helpers::generateToken();
                         setcookie("auth_token", $token, time() + 3600, '/');
-                        $sql = "UPDATE users SET Token = :Token WHERE Email = :Email";
+                        $sql = "UPDATE users SET token = :token WHERE email = :email";
                         $stm = $this->db->prepare($sql);
-                        $stm->bindValue(':Token', $token);
-                        $stm->bindValue(':Email', $email);
+                        $stm->bindValue(':token', $token);
+                        $stm->bindValue(':email', $email);
                         $stm->execute();
-                        if ($data['Id_role'] == 1) {
+                        if ($data['fk_role_id'] == 1) {
                             header("Location: ../dashboard.php");
                         } else {
                             header("Location: ../home.php");
