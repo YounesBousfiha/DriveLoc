@@ -1,6 +1,6 @@
 <?php
 
-namespace Helpers;
+namespace Younes\DriveLoc\Helpers;
 
 class Helpers {
     public static function generateToken() {

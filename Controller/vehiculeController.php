@@ -1,6 +1,6 @@
 <?php
 
-namespace Controller;
+namespace Younes\DriveLoc\Controller;
 
 class vehiculeController extends Base {}
 

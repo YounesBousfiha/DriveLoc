@@ -1,8 +1,8 @@
 <?php
 
-namespace Controller;
+namespace Younes\DriveLoc\Controller;
 
-use Helpers\Helpers;
+use Younes\DriveLoc\Helpers\Helpers;
 
 use Exception; 
 use PDO; // or use backslash

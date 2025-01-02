@@ -2,10 +2,10 @@
     "name": "younes/drive-loc",
     "autoload": {
         "psr-4": {
-            "Config\\": "config/",
-            "Model\\": "model/",
-            "Controller\\": "controller/",
-            "Helpers\\": "helpers" 
+            "Younes\\DriveLoc\\Config\\": "Config/",
+            "Younes\\DriveLoc\\Model\\": "Model/",
+            "Younes\\DriveLoc\\Controller\\": "Controller/",
+            "Younes\\DriveLoc\\Helpers\\": "Helpers"
         }
     },
     "authors": [

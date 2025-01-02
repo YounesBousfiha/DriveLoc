@@ -1,7 +1,7 @@
 <?php 
 
 
-namespace Config;
+namespace Younes\DriveLoc\Config;
 
 use PDO;
 use PDOException;
