@@ -5,27 +5,21 @@ namespace Younes\DriveLoc\Controller;
 trait CategorieController
 {
     private $db;
-    private $table = 'categories';
-
-    public function setDb($db) {
-        $this->db = $db;
-    }
+    private $tableCategories = 'categories';
 
     public function createCategorie($data) {
         $columns = implode(",", array_keys($data));
         $placeholders = ":" . implode(", :", array_keys($data));
-        $sql = "INSERT INTO {$this->table} ({$columns}) VALUES ({$placeholders})";
+        $sql = "INSERT INTO {$this->tableCategories} ({$columns}) VALUES ({$placeholders})";
         $stmt = $this->db->prepare($sql);
-
         foreach ($data as $key => $value) {
-            $stmt->bindValue(":{$key}", $value);
+            $stmt->bindValue(":{$key}", $value['categorie_nom']);
         }
-
         return $stmt->execute();
     }
 
     public function getAllCategories() {
-        $sql = "SELECT * FROM {$this->table}";
+        $sql = "SELECT * FROM {$this->tableCategories}";
         $stmt = $this->db->prepare($sql);
         if($stmt->execute()) {
             return $stmt->fetchAll();
@@ -35,7 +29,7 @@ trait CategorieController
     }
 
     public function getCategorie($id) {
-        $sql = "SELECT * FROM {$this->table} WHERE categorie_id = :id";
+        $sql = "SELECT * FROM {$this->tableCategories} WHERE categorie_id = :id";
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(":id", $id);
         if($stmt->execute()) {
@@ -50,7 +44,7 @@ trait CategorieController
         foreach ($data as $key => $value) {
             $columns[] = "$key = :$key";
         }
-        $sql = "UPDATE {$this->table} SET " . implode(', ', $columns) . " WHERE categorie_id = :id";
+        $sql = "UPDATE {$this->tableCategories} SET " . implode(', ', $columns) . " WHERE categorie_id = :id";
         $stmt = $this->db->prepare($sql);
 
         $stmt->bindValue(":id", $id);
@@ -62,7 +56,7 @@ trait CategorieController
     }
 
     public function deleteCategorie($id) {
-        $sql = "DELETE FROM {$this->table} WHERE categorie_id = :id";
+        $sql = "DELETE FROM {$this->tableCategories} WHERE categorie_id = :id";
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(":id", $id);
         return $stmt->execute();
