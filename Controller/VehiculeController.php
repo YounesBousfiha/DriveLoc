@@ -4,16 +4,12 @@ namespace Younes\DriveLoc\Controller;
 
 trait VehiculeController {
     private $db;
-    private $table = 'vehicules';
-
-    public function setDb($db) {
-        $this->db = $db;
-    }
+    private $tableVehicule = 'vehicules';
 
     public function createVehicule($data) {
         $columns = implode(",", array_keys($data));
         $placeholders = ":" . implode(", :", array_keys($data));
-        $sql = "INSERT INTO {$this->table} ({$columns}) VALUES ({$placeholders})";
+        $sql = "INSERT INTO {$this->tableVehicule} ({$columns}) VALUES ({$placeholders})";
         $stmt = $this->db->prepare($sql);
         
         foreach ($data as $key => $value) {
@@ -24,7 +20,7 @@ trait VehiculeController {
     }
 
     public function getAllVehicules() {
-        $sql = "SELECT * FROM {$this->table}";
+        $sql = "SELECT * FROM {$this->tableVehicule}";
         $stmt = $this->db->prepare($sql);
         if($stmt->execute()) {
             return $stmt->fetchAll();
@@ -34,9 +30,13 @@ trait VehiculeController {
     }
 
     public function getVehicule($id) {
-        $sql = "SELECT * FROM {$this->table} WHERE vehicule_id = :id";
+        var_dump($id);
+        $sql = "SELECT * FROM {$this->tableVehicule} WHERE vehicule_id = :id";
+        var_dump($id);
         $stmt = $this->db->prepare($sql);
+        var_dump($id);
         $stmt->bindValue(":id", $id);
+        var_dump($id);
         if($stmt->execute()) {
             return $stmt->fetch();
         } else {
@@ -49,7 +49,7 @@ trait VehiculeController {
         foreach ($data as $key => $value) {
             $columns[] = "$key = :$key";
         }
-        $sql = "UPDATE {$this->table} SET " . implode(', ', $columns) . " WHERE vehicule_id = :id";
+        $sql = "UPDATE {$this->tableVehicule} SET " . implode(', ', $columns) . " WHERE vehicule_id = :id";
         $stmt = $this->db->prepare($sql);
         
         $stmt->bindValue(":id", $id);
@@ -61,7 +61,7 @@ trait VehiculeController {
     }
 
     public function deleteVehicule($id) {
-        $sql = "DELETE FROM {$this->table} WHERE vehicule_id = :id";
+        $sql = "DELETE FROM {$this->tableVehicule} WHERE vehicule_id = :id";
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(":id", $id);
         return $stmt->execute();

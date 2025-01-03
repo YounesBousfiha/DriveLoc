@@ -9,7 +9,7 @@ use PDO;
 
 trait AuthController {
     private $db;
-    private $table = 'users';
+    private $tableAuth = 'users';
 
     public function setDb($db) {
         $this->db = $db;
@@ -17,7 +17,7 @@ trait AuthController {
     public function isExist($email)
     {
         $isFound = false;
-        $sql = "SELECT * FROM users WHERE email = :email";
+        $sql = "SELECT * FROM {$this->tableAuth} WHERE email = :email";
         try {
             $stm = $this->db->prepare($sql);
             $stm->bindValue(':email', $email);
@@ -36,7 +36,7 @@ trait AuthController {
     {
         $isExist = $this->isExist($newuserInstance->__get('email'));
         if(!$isExist) {
-            $sql = "INSERT INTO users (nom, prenom, email, password, fk_role_id) VALUES (:nom, :prenom, :email, :password, :fk_role_id)";
+            $sql = "INSERT INTO {$this->tableAuth} (nom, prenom, email, password, fk_role_id) VALUES (:nom, :prenom, :email, :password, :fk_role_id)";
             $hashed_password = password_hash($newuserInstance->__get('password'), PASSWORD_DEFAULT);
             try {
                 $stm = $this->db->prepare($sql);
@@ -61,7 +61,7 @@ trait AuthController {
     {
         $isExist = $this->isExist($email);
         if ($isExist) {
-            $sql = "SELECT * FROM users WHERE email = :email";
+            $sql = "SELECT * FROM {$this->tableAuth} WHERE email = :email";
 
             try {
                 $stm = $this->db->prepare($sql);
@@ -71,7 +71,7 @@ trait AuthController {
                     if (password_verify($password, $data['password'])) {
                         $token = Helpers::generateToken();
                         setcookie("auth_token", $token, time() + 3600, '/');
-                        $sql = "UPDATE users SET token = :token WHERE email = :email";
+                        $sql = "UPDATE {$this->tableAuth} SET token = :token WHERE email = :email";
                         $stm = $this->db->prepare($sql);
                         $stm->bindValue(':token', $token);
                         $stm->bindValue(':email', $email);
@@ -95,7 +95,7 @@ trait AuthController {
         $token = $_COOKIE['auth_token'];
         if($token) {
 
-            $sql = "SELECT * FROM users WHERE token = :token";
+            $sql = "SELECT * FROM {$this->tableAuth} WHERE token = :token";
             try {
                 $stm = $this->db->prepare($sql);
                 $stm->bind_param(':token', $token);
