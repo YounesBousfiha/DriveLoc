@@ -6,4 +6,7 @@
 // TODO : in the Avis delete add the update query to set is_delete to true
 // TODO: in Categorie table add new column fk_user_id to know who create the categorie
 // TODO: in Client Management implement soft delete
+
+
+// TODO:
 ?>
