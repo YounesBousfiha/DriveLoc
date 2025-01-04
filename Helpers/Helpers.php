@@ -41,4 +41,21 @@ class Helpers {
             </div>
         </div>';
     }
+
+    public static function renderReservation($reservation) {
+        return '
+            <tr>
+                <td class="w-1/6 text-left py-3 px-4">' . $reservation['vehicule_marque'] . '</td>
+                <td class="w-1/6 text-left py-3 px-4">' . $reservation['vehicule_modele'] . '</td>
+                <td class="w-1/6 text-left py-3 px-4">' . $reservation['vehicule_annee'] . '</td>
+                <td class="w-1/6 text-left py-3 px-4">$' . $reservation['vehicule_prix'] . '</td>
+                <td class="w-1/6 text-left py-3 px-4">' . $reservation['reservation_lieux'] . '</td>
+                <td class="w-1/6 text-left py-3 px-4">' . $reservation['reservation_date'] . '</td>
+                <td class="w-1/6 text-left py-3 px-4">
+                    <span class="' . ($reservation['reservation_status'] == 'Pending' ? 'bg-yellow-200 text-yellow-800' : ($reservation['reservation_status'] == 'Approuve' ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800')) . ' py-1 px-3 rounded-full text-xs">
+                        ' . $reservation['reservation_status'] . '
+                    </span>
+                </td>
+            </tr>';
+    }
 }

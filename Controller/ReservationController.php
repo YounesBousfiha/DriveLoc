@@ -48,4 +48,15 @@ trait ReservationController
         }
     }
 
+    public function getReservationForUser($user_id) {
+        $sql = "SELECT * FROM ReservationForUser WHERE fk_user_id = :user_id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':user_id', $user_id);
+        if($stmt->execute()) {
+            return $stmt->fetchAll();
+        } else {
+            return null;
+        }
+    }
+
 }

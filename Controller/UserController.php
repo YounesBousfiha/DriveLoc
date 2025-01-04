@@ -7,6 +7,7 @@ class UserController {
     use AuthController, AvisController;
     use ReservationController {
         createReservation as public;
+        getReservationForUser as public;
     }
     use VehiculeController {
         getAllVehicules as public;

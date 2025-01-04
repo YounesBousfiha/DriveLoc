@@ -3,6 +3,7 @@
 use Younes\DriveLoc\Controller\UserController;
 use Younes\DriveLoc\Model\Reservation;
 use Younes\DriveLoc\Config\DBConnection;
+use Younes\DriveLoc\Helpers\Helpers;
 
 
 require_once __DIR__ . '/../../../vendor/autoload.php';
@@ -24,4 +25,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $reservation->setDb($db);
     $status = $reservation->createReservation($reservationData);
+
+    Helpers::redirect('http://localhost:63342/DriveLoc/pages/myReservation.php');
+
 }
