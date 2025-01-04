@@ -66,6 +66,17 @@ trait VehiculeController {
         $stmt->bindValue(":id", $id);
         return $stmt->execute();
     }
+
+    public function search($keyword) {
+        $sql = "SELECT * FROM {$this->tableVehicule} WHERE vehicule_marque LIKE :keyword OR vehicule_modele LIKE :keyword";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(":keyword", "%$keyword%");
+        if($stmt->execute()) {
+            return $stmt->fetchAll();
+        } else {
+            return null;
+        }
+    }
 }
 
 

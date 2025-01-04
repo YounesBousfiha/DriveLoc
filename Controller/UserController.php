@@ -8,6 +8,9 @@ class UserController {
     use ReservationController {
         createReservation as public;
     }
+    use VehiculeController {
+        getAllVehicules as public;
+    }
     public function __construct($db) {
         $this->setDb($db);
     }

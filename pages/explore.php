@@ -1,3 +1,18 @@
+<?php
+
+use Younes\DriveLoc\Controller\UserController;
+use Younes\DriveLoc\Config\DBConnection;
+use Younes\DriveLoc\Helpers\Helpers;
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+$db = DBConnection::getConnection()->conn;
+
+$user = new UserController($db);
+
+$allvehicules = $user->getAllVehicules();
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,11 +22,8 @@
     <title>Home Page</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="./assets/css/animations.css" rel="stylesheet">
 </head>
-
-
 
 <body>
     <header>
@@ -22,44 +34,49 @@
                     <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">DriveLoc</span>
                 </a>
                 <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-                    <a href="login.html">
-                        <button type="button"
-                            class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
-                            Login
-                        </button>
-                    </a>
+                    <?php
+                    if($_COOKIE['auth_token']) {
 
-                    <a href="register.html">
-                        <button type="button"
-                            class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
-                            Register
-                        </button>
-                    </a>
-                    <!--  <button type="button" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+                        $db = DBConnection::getConnection()->conn;
+
+                        $auth = new UserController($db);
+                        $user = $auth->validateUser();
+
+                        echo ' <button type="button" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
                   <span class="sr-only">Open user menu</span>
                   <img class="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-3.jpg" alt="user photo">
                 </button>
-                Dropdown menu
                 <div class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
                   <div class="px-4 py-3">
-                    <span class="block text-sm text-gray-900 dark:text-white">Bonnie Green</span>
-                    <span class="block text-sm  text-gray-500 truncate dark:text-gray-400">name@flowbite.com</span>
+                    <span class="block text-sm text-gray-900 dark:text-white">'. $user['prenom'] . '</span>
+                    <span class="block text-sm  text-gray-500 truncate dark:text-gray-400">'. $user['email'] . '</span>
                   </div>
                   <ul class="py-2" aria-labelledby="user-menu-button">
                     <li>
                       <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard</a>
                     </li>
                     <li>
-                      <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Settings</a>
-                    </li>
-                    <li>
-                      <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Earnings</a>
-                    </li>
-                    <li>
-                      <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
+                      <a href="./actions/auth/logout.php" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sign out</a>
                     </li>
                   </ul>
-                </div>-->
+                  </div>';
+                    } else {
+                        echo '<a href="login.html">
+                                    <button type="button"
+                                        class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                                        Login
+                                    </button>
+                                   </a>
+
+                                <a href="register.html">
+                                    <button type="button"
+                                        class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 shadow-lg shadow-green-500/50 dark:shadow-lg dark:shadow-green-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">
+                                        Register
+                                    </button>
+                                </a>';
+                    }
+
+                    ?>
                     <button data-collapse-toggle="navbar-user" type="button"
                         class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
                         aria-controls="navbar-user" aria-expanded="false">
@@ -84,7 +101,7 @@
                                 class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">About</a>
                         </li>
                         <li>
-                            <a href="explore.php"
+                            <a href="#"
                                 class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Explore</a>
                         </li>
                         <li>
@@ -97,68 +114,104 @@
         </nav>
     </header>
 
-    <section class="flex items-center justify-center h-screen bg-opacity-50" style="background-image: url(./assets/img/output-onlinepngtools.png); background-position: center; background-size: cover;">
-        <div class="w-full max-w-md bg-white p-8 rounded-lg shadow-xl backdrop-blur-lg">
-            <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Create an Account</h2>
-            <form action="./actions/auth/register.php" method="POST">
-                <!-- Nom -->
-                <div class="mb-4">
-                    <label for="full_name" class="block text-gray-700 font-semibold">Nom</label>
-                    <input type="text" id="nom" name="nom" placeholder="Enter your full name"
-                        class="w-full px-4 py-3 mt-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+    <!-- Hero Section -->
+    <section class="bg-cover bg-center h-screen flex items-center justify-center animate-fadeInHero"
+        style="background-image: url('./assets/img/output-onlinepngtools.png');">
+        <div class="text-center text-white">
+            <h1 class="text-5xl font-bold mb-4">Explore Our Collection</h1>
+            <p class="text-lg mb-8">Discover the best products tailored just for you.</p>
+            <a href="#products" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">Shop
+                Now</a>
+        </div>
+    </section>
+
+    <section>
+        <div class="font-[sans-serif] bg-gray-100">
+            <div class="p-4 mx-auto lg:max-w-7xl md:max-w-4xl sm:max-w-xl max-sm:max-w-sm">
+                <div class="flex justify-between items-center flex-wrap">
+                    <div class="mb-4 sm:mb-0">
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-800 mb-6 sm:mb-10">Premium Sneakers</h2>
+                    </div>
+                    <div class="w-full sm:w-auto flex flex-wrap gap-4">
+                        <form action="search.php" method="POST" class="flex items-center">
+                            <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                                    </svg>
+                                </div>
+                                <input type="search" id="default-search" style="width: 25rem;"
+                                    class="block w-full sm:max-w-3xl p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                    placeholder="Search Model..." style="width: 100%; max-width: 40rem"
+                                    name="search"
+                                />
+                                <button type="submit"
+                                    class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
+                            </div>
+                        </form>
+                        <div class="relative">
+                            <select id="category-filter" class="block w-full sm:max-w-xs p-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                <option value="">All Categories</option>
+                                <option value="sneakers">Sneakers</option>
+                                <option value="boots">Boots</option>
+                                <option value="hiking">Hiking</option>
+                                <option value="pumps">Pumps</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>     
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-xl:gap-4 gap-6">
+                    <?php
+                        foreach ($allvehicules as $vehicule) {
+                            echo HELPERS::renderVehicule($vehicule);
+                        }
+                    ?>
                 </div>
-                <!-- Prenom -->
-                <div class="mb-4">
-                    <label for="full_name" class="block text-gray-700 font-semibold">Prenom</label>
-                    <input type="text" id="prenom" name="prenom" placeholder="Enter your full name"
-                        class="w-full px-4 py-3 mt-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
-                </div>
-    
-                <!-- Email -->
-                <div class="mb-4">
-                    <label for="email" class="block text-gray-700 font-semibold">Email Address</label>
-                    <input type="email" id="email" name="email" placeholder="Enter your email"
-                        class="w-full px-4 py-3 mt-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
-                </div>
-    
-                <!-- Password -->
-                <div class="mb-4">
-                    <label for="password" class="block text-gray-700 font-semibold">Password</label>
-                    <input type="password" id="password" name="password" placeholder="Enter your password"
-                        class="w-full px-4 py-3 mt-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
-                </div>
-    
-                <!-- Confirm Password -->
-                <div class="mb-6">
-                    <label for="confirm_password" class="block text-gray-700 font-semibold">Confirm Password</label>
-                    <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm your password"
-                        class="w-full px-4 py-3 mt-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
-                </div>
-    
-                <!-- Submit Button -->
-                <button type="submit"
-                    class="w-full py-3 px-4 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 focus:ring-2 focus:ring-indigo-500">
-                    Sign Up
-                </button>
-    
-                <!-- Login Link -->
-                <div class="mt-4 text-center">
-                    <p class="text-sm text-gray-600">Already have an account? 
-                        <a href="#" class="text-indigo-600 hover:underline">Log In</a>
-                    </p>
-                </div>
-            </form>
-    
-            <!-- OAuth Section -->
-            <div class="mt-6 space-y-4">
-                <button class="w-full py-3 px-4 bg-red-500 text-white font-semibold rounded-lg shadow-md hover:bg-red-600 focus:ring-2 focus:ring-red-500">
-                    <i class="fab fa-google mr-2"></i>Sign Up with Google
-                </button>
             </div>
         </div>
     </section>
-    
-    
+
+    <section class="bg-gray-100">
+        <div class="py-6">
+            <ul class="flex space-x-5 justify-center font-[sans-serif]">
+                <li
+                    class="flex items-center justify-center shrink-0 cursor-pointer text-base font-bold text-blue-600 h-9 rounded-md">
+                    Prev
+                </li>
+                <li
+                    class="flex items-center justify-center shrink-0 hover:bg-gray-50  border-2 cursor-pointer text-base font-bold text-gray-800 px-[13px] h-9 rounded-md">
+                    1
+                </li>
+                <li
+                    class="flex items-center justify-center shrink-0 bg-blue-500  border-2 border-blue-500 cursor-pointer text-base font-bold text-white px-[13px] h-9 rounded-md">
+                    2
+                </li>
+                <li
+                    class="flex items-center justify-center shrink-0 hover:bg-gray-50  border-2 cursor-pointer text-base font-bold text-gray-800 px-[13px] h-9 rounded-md">
+                    3
+                </li>
+                <li
+                    class="flex items-center justify-center shrink-0 hover:bg-gray-50  border-2 cursor-pointer text-base font-bold text-gray-800 px-[13px] h-9 rounded-md">
+                    4
+                </li>
+                <li
+                    class="flex items-center justify-center shrink-0 hover:bg-gray-50  border-2 cursor-pointer text-base font-bold text-gray-800 px-[13px] h-9 rounded-md">
+                    5
+                </li>
+                <li
+                    class="flex items-center justify-center shrink-0 hover:bg-gray-50  border-2 cursor-pointer text-base font-bold text-gray-800 px-[13px] h-9 rounded-md">
+                    6
+                </li>
+                <li
+                    class="flex items-center justify-center shrink-0 cursor-pointer text-base font-bold text-blue-600 h-9 rounded-md">
+                    Next
+                </li>
+            </ul>
+        </div>
+    </section>
+
 
     <footer class="bg-white dark:bg-gray-900">
         <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
@@ -260,7 +313,6 @@
             </div>
         </div>
     </footer>
-
 </body>
 
 </html>
