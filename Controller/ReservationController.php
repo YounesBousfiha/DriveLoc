@@ -9,7 +9,7 @@ trait ReservationController
 
     public function approuverReservation($id)
     {
-        $query = "UPDATE $this->tableReservation SET reservation_status = 'approuver' WHERE reservation_id = :id";
+        $query = "UPDATE $this->tableReservation SET reservation_status = 'Approuve' WHERE reservation_id = :id";
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':id', $id);
         $stmt->execute();
@@ -17,7 +17,7 @@ trait ReservationController
 
     public function rejectReservation($id)
     {
-        $query = "UPDATE $this->tableReservation SET reservation_status = 'rejeter' WHERE reservation_id = :id";
+        $query = "UPDATE $this->tableReservation SET reservation_status = 'Reject' WHERE reservation_id = :id";
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':id', $id);
         $stmt->execute();
