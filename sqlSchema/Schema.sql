@@ -25,7 +25,9 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS categories (
     categorie_id int NOT NULL AUTO_INCREMENT,
     categorie_nom varchar(100),
-    PRIMARY KEY(categorie_id)
+    fk_user_id int NOT NULL,
+    PRIMARY KEY(categorie_id),
+    FOREIGN KEY(fk_user_id) REFERENCES users(user_id)
 );
 
 
@@ -60,6 +62,7 @@ CREATE TABLE IF NOT EXISTS avis (
     avis_rating int NOT NULL,
     fk_user_id int NOT NULL,
     fk_vehicule_id int NOT NULL,
+    is_deleted BOOLEAN DEFAULT FALSE,
     PRIMARY KEY(avis_id),
     FOREIGN KEY(fk_user_id) REFERENCES users(user_id),
     FOREIGN KEY(fk_vehicule_id) REFERENCES vehicules(vehicule_id)
