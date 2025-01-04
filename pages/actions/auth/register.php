@@ -12,7 +12,7 @@ $db = DBConnection::getConnection()->conn;
 
 if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $user = new UserController();
+    $user = new UserController($db);
     $userData = new User($_POST['nom'], $_POST['prenom'], $_POST['email'], $_POST['password']);
     $user->setDb($db);
     $status = $user->signup($userData);

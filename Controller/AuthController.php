@@ -98,10 +98,9 @@ trait AuthController {
             $sql = "SELECT * FROM {$this->tableAuth} WHERE token = :token";
             try {
                 $stm = $this->db->prepare($sql);
-                $stm->bind_param(':token', $token);
+                $stm->bindValue(':token', $token);
                 if($stm->execute()) {
-                    $user = $stm->fetch();
-                    return $user;
+                    return $stm->fetch();
                 } else {
                     return null;
                 }
@@ -123,9 +122,9 @@ trait AuthController {
         }
     }
 
-    public function logout() {
+    public static function logout() {
         setcookie("auth_token", "", time() - 3600, '/');
-        Helpers::redirect('http://localhost:3000/index.php');
+        Helpers::redirect('http://localhost:63342/DriveLoc/index.php');
     }
 }
 
