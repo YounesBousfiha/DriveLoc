@@ -24,7 +24,7 @@ class Helpers {
             <div class="mb-4 bg-gray-100 rounded p-2">
                 <img src="https://readymadeui.com/images/product9.webp" alt="Product 1" class="aspect-[33/35] w-full object-contain" />
             </div>
-            <div>
+            <div data-id="' . $vehicule['vehicule_id'] . '">
                 <div class="flex gap-2">
                     <h5 class="text-base font-bold text-gray-800">' . $vehicule['vehicule_marque'] . '</h5>
                     <h6 class="text-base text-gray-800 font-bold ml-auto"> $' . $vehicule['vehicule_prix'] . '</h6>
@@ -36,7 +36,7 @@ class Helpers {
                             <path d="M45.5 4A18.53 18.53 0 0 0 32 9.86 18.5 18.5 0 0 0 0 22.5C0 40.92 29.71 59 31 59.71a2 2 0 0 0 2.06 0C34.29 59 64 40.92 64 22.5A18.52 18.52 0 0 0 45.5 4ZM32 55.64C26.83 52.34 4 36.92 4 22.5a14.5 14.5 0 0 1 26.36-8.33 2 2 0 0 0 3.27 0A14.5 14.5 0 0 1 60 22.5c0 14.41-22.83 29.83-28 33.14Z" data-original="#000000"></path>
                         </svg>
                     </div>
-                    <button type="button" class="text-sm px-2 h-9 font-semibold w-full bg-blue-600 hover:bg-blue-700 text-white tracking-wide ml-auto outline-none border-none rounded">Reserver</button>
+                    <button type="button" onclick="setModalDataId(this)" data-modal-target="authentication-modal" data-modal-toggle="authentication-modal" class="text-sm px-2 h-9 font-semibold w-full bg-blue-600 hover:bg-blue-700 text-white tracking-wide ml-auto outline-none border-none rounded">Reserver</button>
                 </div>
             </div>
         </div>';
