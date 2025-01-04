@@ -5,6 +5,9 @@ use Younes\DriveLoc\Config\DBConnection;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
+$db = DBConnection::getConnection()->conn;
+
+$auth = new UserController($db);
 
 ?>
 <!DOCTYPE html>
@@ -31,9 +34,6 @@ require_once __DIR__ . '/vendor/autoload.php';
                     <?php
                     if($_COOKIE['auth_token']) {
 
-                        $db = DBConnection::getConnection()->conn;
-
-                        $auth = new UserController($db);
                         $user = $auth->validateUser();
 
                         echo ' <button type="button" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
@@ -98,6 +98,15 @@ require_once __DIR__ . '/vendor/autoload.php';
                             <a href="pages/explore.php"
                                 class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Explore</a>
                         </li>
+                        <?php
+                        if($_COOKIE['auth_token']) {
+                            $user = $auth->validateUser();
+                            if($user['fk_role_id'] === 2) {
+                                echo '<li>
+                            <a href="pages/myReservation.php"
+                                class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">My Reservations</a>';
+                            }
+                        } ?>
                         <li>
                             <a href="#"
                                 class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Contact</a>
