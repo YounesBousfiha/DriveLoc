@@ -166,20 +166,12 @@ $admin = new AdminController(DBConnection::getConnection()->conn);
                             </thead>
                             <tbody class="text-gray-700">
                                 <!-- ...existing rows... -->
-                                <tr>
-                                    <td class="w-1/4 text-left py-3 px-4">Toyota</td>
-                                    <td class="w-1/4 text-left py-3 px-4">Corolla</td>
-                                    <td class="w-1/4 text-left py-3 px-4">$20,000</td>
-                                    <td class="w-1/4 text-left py-3 px-4">Available</td>
-                                    <td class="text-left py-3 px-4 flex space-x-2">
-                                        <button class="bg-yellow-500 text-white px-2 py-1 rounded flex items-center">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-                                        <button class="bg-red-500 text-white px-2 py-1 rounded flex items-center">
-                                            <i class="fas fa-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
+                                <?php
+                                $vehicules = $admin->getAllVehicules();
+                                foreach ($vehicules as $vehicule) {
+                                    echo Helpers::renderVehiculeForAdmin($vehicule);
+                                }
+                                ?>
                                 <!-- ...existing rows... -->
                             </tbody>
                         </table>
