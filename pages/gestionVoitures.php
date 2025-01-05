@@ -7,7 +7,14 @@ use Younes\DriveLoc\Helpers\Helpers;
 require_once __DIR__ . '/../vendor/autoload.php';
 
 $admin = new AdminController(DBConnection::getConnection()->conn);
-
+if($_COOKIE['auth_token']) {
+    $userData = $admin->validateUser();
+    if($userData['fk_role_id'] !== 1) {
+        Helpers::redirect('http://localhost:63342/DriveLoc/index.php');
+    }
+} else {
+    Helpers::redirect('http://localhost:63342/DriveLoc/index.php');
+}
 
 ?>
 
@@ -57,7 +64,7 @@ $admin = new AdminController(DBConnection::getConnection()->conn);
                 <i class="fas fa-user mr-3"></i>
                 Gestion des Client
             </a>
-            <a href="gestionAvis.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+            <a href="gestionAvis.php" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
                 <i class="fas fa-comments mr-3"></i>
                 Gestion des avis
             </a>
@@ -117,7 +124,7 @@ $admin = new AdminController(DBConnection::getConnection()->conn);
                     <i class="fas fa-user mr-3"></i>
                     Gestion des Client
                 </a>
-                <a href="gestionAvis.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                <a href="gestionAvis.php" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
                     <i class="fas fa-comments mr-3"></i>
                     Gestion des Avis
                 </a>
@@ -142,8 +149,8 @@ $admin = new AdminController(DBConnection::getConnection()->conn);
                 <i class="fas fa-plus mr-3"></i> New Report
             </button> -->
         </header>
-    
         <div class="w-full h-screen overflow-x-hidden border-t flex flex-col">
+
             <main class="w-full flex-grow p-6">
                 <h1 class="text-3xl text-black pb-6">Gestion des Voitures</h1>
 
@@ -172,6 +179,7 @@ $admin = new AdminController(DBConnection::getConnection()->conn);
                                     echo Helpers::renderVehiculeForAdmin($vehicule);
                                 }
                                 ?>
+
                                 <!-- ...existing rows... -->
                             </tbody>
                         </table>

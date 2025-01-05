@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS users (
     prenom varchar(100) NOT NULL,
     email varchar(100) UNIQUE NOT NULL,
     password varchar(100) NOT NULL,
+    token varchar(255),
     fk_role_id int NOT NULL,
     PRIMARY KEY(user_id),
     FOREIGN KEY(fk_role_id) REFERENCES roles(role_id)

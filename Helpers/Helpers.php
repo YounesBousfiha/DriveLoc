@@ -92,18 +92,19 @@ class Helpers
     public static function renderVehiculeForAdmin($vehicule)
     {
         return '<tr>
-                                    <td class="w-1/4 text-left py-3 px-4">' . $vehicule['vehicule_marque'] . '</td>
-                                    <td class="w-1/4 text-left py-3 px-4">' . $vehicule['vehicule_modele'] . '</td>
-                                    <td class="w-1/4 text-left py-3 px-4">' . $vehicule['vehicule_prix'] . '</td>
-                                    <td class="w-1/4 text-left py-3 px-4">' . $vehicule['vehicule_disponibilite'] . '</td>
-                                    <td class="text-left py-3 px-4 flex space-x-2">
-                                        <button class="bg-yellow-500 text-white px-2 py-1 rounded flex items-center">
-                                            <i class="fas fa-edit"></i>
-                                        </button>
-        
-                                            <a class="bg-red-500 text-white px-2 py-1 rounded flex items-center" href="./actions/vehicule/delete_vehicule.php?id=' . $vehicule['vehicule_id'] . '"><i class="fas fa-trash"></i></a>
-                                    </td>
-                                </tr>';
+                <td class="w-1/4 text-left py-3 px-4">' . $vehicule['vehicule_marque'] . '</td>
+                <td class="w-1/4 text-left py-3 px-4">' . $vehicule['vehicule_modele'] . '</td>
+                <td class="w-1/4 text-left py-3 px-4">' . $vehicule['vehicule_prix'] . '</td>
+                <td class="w-1/4 text-left py-3 px-4">' . $vehicule['vehicule_disponibilite'] . '</td>
+                <td class="text-left py-3 px-4 flex space-x-2">
+                    <a class="bg-yellow-500 text-white px-2 py-1 rounded flex items-center" href="./actions/vehicule/update_vehicule.php?id=' . $vehicule['vehicule_id'] . '">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <a class="bg-red-500 text-white px-2 py-1 rounded flex items-center" href="./actions/vehicule/delete_vehicule.php?id=' . $vehicule['vehicule_id'] . '">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                </td>
+            </tr>';
     }
 
     public static function renderCategories($categorie)
