@@ -13,16 +13,20 @@ $vehicule_id = $_GET['id'];
 
 $userController = new UserController($db);
 $vehicule = $userController->getVehicule($vehicule_id);
-$avis = $userController->getAvisByVehicule($vehicule_id); // TODO: develop this method in AvisController
+$avis = $userController->getAvisByVehicule($vehicule_id);
 
 if(isset($_POST['submit'])) {
     $userdata = $userController->validateUser();
     unset($_POST["submit"]);
     $_POST['fk_user_id'] = $userdata['user_id'];
 
-    //var_dump($_POST);
-    $newavis = new Avis($_POST['avis_rating'], $_POST['fk_user_id'], $_POST['fk_vehicule_id']);
-    $userController->createAvis($newavis);
+    if ($userController->CheckEligibleForAvis($_POST['fk_vehicule_id'] , $_POST['fk_user_id'])) {
+        $newavis = new Avis($_POST['avis_rating'], $_POST['fk_user_id'], $_POST['fk_vehicule_id']);
+        $userController->createAvis($newavis);
+        header("Refresh:0");
+    } else {
+        echo "You Are not Allowed To Rate this Vehicule";
+    }
 }
 
 

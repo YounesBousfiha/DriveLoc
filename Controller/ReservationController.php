@@ -69,4 +69,16 @@ trait ReservationController
         }
     }
 
+    public function CheckEligibleForAvis($vehicule_id, $user_id) {
+        $sql = "SELECT * FROM {$this->tableReservation} WHERE fk_vehicule_id = :vehicule_id AND fk_user_id = :user_id AND reservation_status = 'Approuve'";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':vehicule_id', $vehicule_id);
+        $stmt->bindParam(':user_id', $user_id);
+        if($stmt->execute()) {
+            return $stmt->fetch();
+        } else {
+            return null;
+        }
+    }
+
 }

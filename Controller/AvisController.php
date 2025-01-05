@@ -70,5 +70,4 @@ trait AvisController
         }
     }
 
-
 }
