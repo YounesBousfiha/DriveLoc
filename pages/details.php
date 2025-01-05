@@ -44,6 +44,7 @@ if(isset($_POST['submit'])) {
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
     <link href="./assets/css/animations.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
 </head>
 
 <body>
@@ -254,7 +255,8 @@ if(isset($_POST['submit'])) {
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <?php
                 foreach ($avis as $oneAvis) {
-                    echo Helpers::renderAvis($oneAvis);
+                    $Owner = $userController->validateUser();
+                    echo Helpers::renderAvis($oneAvis, $Owner);
                 }
             ?>
         </div>
