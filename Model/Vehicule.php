@@ -1,10 +1,13 @@
 <?php
 
 
-use Younes\DriveLoc\Model\BaseModel;
+namespace Younes\DriveLoc\Model;
 
 
-class Vehicule extends BaseModel {
+use Younes\DriveLoc\Controller\AdminController;
+use Younes\DriveLoc\Helpers\Helpers;
+
+class Vehicule {
     
     private $vehicule_id;
     private $vehicule_marque;
@@ -12,7 +15,7 @@ class Vehicule extends BaseModel {
     private $vehicule_disponibilite;
     private $vehicule_prix;
     private $fk_categorie_id;
-    private $fk_user_id;
+    private $fk_user_id = 1;
 
 
 

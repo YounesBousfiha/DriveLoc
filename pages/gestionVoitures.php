@@ -1,3 +1,16 @@
+<?php
+
+use Younes\DriveLoc\Controller\AdminController;
+use Younes\DriveLoc\Config\DBConnection;
+use Younes\DriveLoc\Helpers\Helpers;
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+$admin = new AdminController(DBConnection::getConnection()->conn);
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -178,25 +191,26 @@
             <div x-show="isModalOpen" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50" @click.away="isModalOpen = false">
                 <div class="bg-white p-6 rounded-lg">
                     <h2 class="text-2xl mb-4">Add Car</h2>
-                    <form>
-                        <div class="mb-4">
-                            <label class="block text-gray-700">Marque</label>
-                            <input type="text" class="w-full px-3 py-2 border rounded" placeholder="Car Marque">
-                        </div>
-                        <div class="mb-4">
-                            <label class="block text-gray-700">Model</label>
-                            <input type="text" class="w-full px-3 py-2 border rounded" placeholder="Car Model">
-                        </div>
-                        <div class="mb-4">
-                            <label class="block text-gray-700">Prix</label>
-                            <input type="text" class="w-full px-3 py-2 border rounded" placeholder="Car Prix">
-                        </div>
-                        <div class="mb-4">
-                            <label class="block text-gray-700">Disponibilité</label>
-                            <input type="text" class="w-full px-3 py-2 border rounded" placeholder="Car Disponibilité">
+                    <form action="./actions/vehicule/ajoute_mass.php" method="POST">
+                        <div id="car-fields">
+                            <div class="flex flex-col space-y-4">
+                                <input class="border border-gray-300 p-2 rounded" type="text" name="cars[0][vehicule_marque]" placeholder="Make" required>
+                                <input class="border border-gray-300 p-2 rounded" type="text" name="cars[0][vehicule_modele]" placeholder="Model" required>
+                                <select class="border border-gray-300 p-2 rounded" name="cars[0][fk_categorie_id]" required>
+                                    <?php
+                                    $categories = $admin->getAllCategories();
+                                    foreach ($categories as $categorie) {
+                                        echo "<option value=\"{$categorie['categorie_id']}\">{$categorie['categorie_nom']}</option>";
+                                    }
+                                    ?>
+                                </select>
+                                <input class="border border-gray-300 p-2 rounded" type="number" name="cars[0][vehicule_prix]" placeholder="Price" required>
+                                <input class="border border-gray-300 p-2 rounded" type="number" name="cars[0][vehicule_annee]" placeholder="Year" required>
+                            </div>
                         </div>
                         <div class="flex justify-end">
                             <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded mr-2" @click="isModalOpen = false">Cancel</button>
+                            <button type="button" onclick="addCarField()">Add More Cars</button>
                             <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Add Car</button>
                         </div>
                     </form>
@@ -205,7 +219,30 @@
         </div>
         
     </div>
+    <script>
+        let carIndex = 1;
 
+        function addCarField() {
+            const carFields = document.getElementById('car-fields');
+            const carField = document.createElement('div');
+            carField.classList.add('flex', 'flex-col', 'space-y-4', 'mt-4');
+            carField.innerHTML = `
+        <input class="border border-gray-300 p-2 rounded" type="text" name="cars[${carIndex}][vehicule_marque]" placeholder="Make" required>
+        <input class="border border-gray-300 p-2 rounded" type="text" name="cars[${carIndex}][vehicule_modele]" placeholder="Model" required>
+        <select class="border border-gray-300 p-2 rounded" name="cars[${carIndex}][fk_categorie_id]" required>
+            <?php
+            foreach ($categories as $categorie) {
+                echo "<option value=\"${categorie['categorie_id']}\">${categorie['categorie_nom']}</option>";
+            }
+            ?>
+        </select>
+        <input class="border border-gray-300 p-2 rounded" type="number" name="cars[${carIndex}][vehicule_prix]" placeholder="Price" required>
+        <input class="border border-gray-300 p-2 rounded" type="number" name="cars[${carIndex}][vehicule_annee]" placeholder="Year" required>
+    `;
+            carFields.appendChild(carField);
+            carIndex++;
+        }
+    </script>
     <!-- AlpineJS -->
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
     <!-- Font Awesome -->
