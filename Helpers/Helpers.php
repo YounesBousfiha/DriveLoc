@@ -36,11 +36,14 @@ class Helpers
                 </div>
                 <p class="text-gray-500 text-[13px] mt-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                 <div class="flex items-center gap-2 mt-4">
-                    <div class="bg-pink-100 hover:bg-pink-200 w-12 h-9 flex items-center justify-center rounded cursor-pointer" title="Wishlist">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16px" class="fill-pink-600 inline-block" viewBox="0 0 64 64">
-                            <path d="M45.5 4A18.53 18.53 0 0 0 32 9.86 18.5 18.5 0 0 0 0 22.5C0 40.92 29.71 59 31 59.71a2 2 0 0 0 2.06 0C34.29 59 64 40.92 64 22.5A18.52 18.52 0 0 0 45.5 4ZM32 55.64C26.83 52.34 4 36.92 4 22.5a14.5 14.5 0 0 1 26.36-8.33 2 2 0 0 0 3.27 0A14.5 14.5 0 0 1 60 22.5c0 14.41-22.83 29.83-28 33.14Z" data-original="#000000"></path>
-                        </svg>
-                    </div>
+                          <a href="details.php?id=' . $vehicule['vehicule_id'] . '"title="View Details">
+    <div class="bg-blue-100 hover:bg-blue-200 w-12 h-9 flex items-center justify-center rounded cursor-pointer">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16px" class="fill-blue-600 inline-block" viewBox="0 0 64 64">
+            <path d="M32 12C18.4 12 5.9 22 2 32c3.9 10 16.4 20 30 20s26.1-10 30-20c-3.9-10-16.4-20-30-20Zm0 34c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16Zm0-28a12 12 0 1 0 12 12A12 12 0 0 0 32 18Zm0 20a8 8 0 1 1 8-8 8 8 0 0 1-8 8Z"></path>
+        </svg>
+    </div>
+</a>
+
                     <button type="button" onclick="setModalDataId(this)" data-modal-target="authentication-modal" data-modal-toggle="authentication-modal" class="text-sm px-2 h-9 font-semibold w-full bg-blue-600 hover:bg-blue-700 text-white tracking-wide ml-auto outline-none border-none rounded">Reserver</button>
                 </div>
             </div>
@@ -129,4 +132,14 @@ class Helpers
                                     <td class="w-1/8 text-left py-3 px-4">' . $avis['avis_rating'] . '</td>
                                 </tr>';
     }
+
+    public static function renderAvis($avis)
+    {
+        return '
+            <div class="flex flex-col items-center bg-white p-4 rounded-lg shadow-md">
+                <p id="user-name" class="text-lg font-medium">User: <span class="font-bold">' .$avis['fullname'] . '</span></p>
+                <p id="user-rating" class="text-lg font-medium">Rating: <span class="font-bold">' .$avis['avis_rating'] . '</span> stars</p>
+            </div>';
+    }
+
 }

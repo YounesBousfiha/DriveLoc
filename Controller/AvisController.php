@@ -59,5 +59,16 @@ trait AvisController
         }
     }
 
+    public function getAvisByVehicule($vehicule_id) {
+        $sql = "SELECT * FROM {$this->tableAvis} WHERE fk_vehicule_id = :vehicule_id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':vehicule_id', $vehicule_id);
+        if($stmt->execute()) {
+            return $stmt->fetchAll();
+        } else {
+            return null;
+        }
+    }
+
 
 }

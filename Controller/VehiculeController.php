@@ -30,13 +30,9 @@ trait VehiculeController {
     }
 
     public function getVehicule($id) {
-        var_dump($id);
         $sql = "SELECT * FROM {$this->tableVehicule} WHERE vehicule_id = :id";
-        var_dump($id);
         $stmt = $this->db->prepare($sql);
-        var_dump($id);
         $stmt->bindValue(":id", $id);
-        var_dump($id);
         if($stmt->execute()) {
             return $stmt->fetch();
         } else {
