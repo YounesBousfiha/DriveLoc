@@ -1,3 +1,19 @@
+<?php
+
+use Younes\DriveLoc\Config\DBConnection;
+use Younes\DriveLoc\Controller\AdminController;
+use Younes\DriveLoc\Helpers\Helpers;
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+$db = DBConnection::getConnection()->conn;
+
+$admin = new AdminController($db);
+
+$allCategories = $admin->getAllCategories();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -142,29 +158,18 @@
                         <table class="min-w-full bg-white">
                             <thead class="bg-gray-800 text-white">
                                 <tr>
-                                    <th class="w-1/4 text-left py-3 px-4 uppercase font-semibold text-sm">Client Email</th>
-                                    <th class="w-1/4 text-left py-3 px-4 uppercase font-semibold text-sm">Reservation Date</th>
-                                    <th class="w-1/4 text-left py-3 px-4 uppercase font-semibold text-sm">Lieux de Prise en Charge</th>
-                                    <th class="w-1/4 text-left py-3 px-4 uppercase font-semibold text-sm">Status</th>
-                                    <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Actions</th>
+                                    <th class="w-1/4 text-left py-3 px-4 uppercase font-semibold text-sm">Categorie id</th>
+                                    <th class="w-1/4 text-left py-3 px-4 uppercase font-semibold text-sm">Categorie name</th>
+                                    <th class="w-1/4 text-left py-3 px-4 uppercase font-semibold text-sm">Actions</th>
                                 </tr>
                             </thead>
                             <tbody class="text-gray-700">
                                 <!-- ...existing rows... -->
-                                <tr>
-                                    <td class="w-1/4 text-left py-3 px-4">john.doe@example.com</td>
-                                    <td class="w-1/4 text-left py-3 px-4">2023-10-01</td>
-                                    <td class="w-1/4 text-left py-3 px-4">Paris</td>
-                                    <td class="w-1/4 text-left py-3 px-4">Pending</td>
-                                    <td class="text-left py-3 px-4 flex space-x-2">
-                                        <button class="bg-green-500 text-white px-2 py-1 rounded flex items-center">
-                                            <i class="fas fa-check"></i> Approve
-                                        </button>
-                                        <button class="bg-red-500 text-white px-2 py-1 rounded flex items-center">
-                                            <i class="fas fa-times"></i> Reject
-                                        </button>
-                                    </td>
-                                </tr>
+                                <?php
+                                foreach ($allCategories as $categorie) {
+                                    echo Helpers::renderCategories($categorie);
+                                }
+                                ?>
                                 <!-- ...existing rows... -->
                             </tbody>
                         </table>

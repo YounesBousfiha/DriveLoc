@@ -2,23 +2,28 @@
 
 namespace Younes\DriveLoc\Helpers;
 
-class Helpers {
-    public static function generateToken() {
+class Helpers
+{
+    public static function generateToken()
+    {
         return bin2hex(random_bytes(32));
     }
 
-    public static function redirect($url) {
+    public static function redirect($url)
+    {
         return header("Location:" . $url);
     }
 
-    public static function ValidateData($data) {
+    public static function ValidateData($data)
+    {
         $data = trim($data);
         $data = stripslashes($data);
         $data = htmlspecialchars($data);
         return $data;
     }
 
-    public static function renderVehicule($vehicule) {
+    public static function renderVehicule($vehicule)
+    {
         return '
         <div class="bg-white rounded p-4 cursor-pointer hover:-translate-y-1 transition-all relative">
             <div class="mb-4 bg-gray-100 rounded p-2">
@@ -42,7 +47,8 @@ class Helpers {
         </div>';
     }
 
-    public static function renderReservation($reservation) {
+    public static function renderReservation($reservation)
+    {
         return '
             <tr>
                 <td class="w-1/6 text-left py-3 px-4">' . $reservation['vehicule_marque'] . '</td>
@@ -59,7 +65,8 @@ class Helpers {
             </tr>';
     }
 
-    public static function renderReservationForAdmin($reservation) {
+    public static function renderReservationForAdmin($reservation)
+    {
         return '<tr>
                                     <td class="w-1/4 text-left py-3 ">' . $reservation['email'] . '</td>
                                     <td class="w-1/4 text-left py-3 px-4">' . $reservation['vehicule_marque'] . '</td>
@@ -76,25 +83,36 @@ class Helpers {
                                             <i class="fas fa-check"></i> <a href="./actions/reservation/approuve_reservation.php?id=' . $reservation['reservation_id'] . '">Approuver</a>
                                         </button>
                                         <button class="bg-red-500 text-white px-2 py-1 rounded flex items-center">
-                                            <i class="fas fa-times"></i> <a href="./actions/reservation/reject_reservation.php?id=' . $reservation['reservation_id'] .'">Reject</a>
+                                            <i class="fas fa-times"></i> <a href="./actions/reservation/reject_reservation.php?id=' . $reservation['reservation_id'] . '">Reject</a>
                                         </button>
                                     </td>
                                 </tr>';
     }
 
-    public static function  renderVehiculeForAdmin($vehicule)
+    public static function renderVehiculeForAdmin($vehicule)
     {
         return '<tr>
-                                    <td class="w-1/4 text-left py-3 px-4">'. $vehicule['vehicule_marque']. '</td>
-                                    <td class="w-1/4 text-left py-3 px-4">'. $vehicule['vehicule_modele']. '</td>
-                                    <td class="w-1/4 text-left py-3 px-4">'. $vehicule['vehicule_prix']. '</td>
-                                    <td class="w-1/4 text-left py-3 px-4">'. $vehicule['vehicule_disponibilite']. '</td>
+                                    <td class="w-1/4 text-left py-3 px-4">' . $vehicule['vehicule_marque'] . '</td>
+                                    <td class="w-1/4 text-left py-3 px-4">' . $vehicule['vehicule_modele'] . '</td>
+                                    <td class="w-1/4 text-left py-3 px-4">' . $vehicule['vehicule_prix'] . '</td>
+                                    <td class="w-1/4 text-left py-3 px-4">' . $vehicule['vehicule_disponibilite'] . '</td>
                                     <td class="text-left py-3 px-4 flex space-x-2">
                                         <button class="bg-yellow-500 text-white px-2 py-1 rounded flex items-center">
                                             <i class="fas fa-edit"></i>
                                         </button>
         
                                             <a class="bg-red-500 text-white px-2 py-1 rounded flex items-center" href="./actions/vehicule/delete_vehicule.php?id=' . $vehicule['vehicule_id'] . '"><i class="fas fa-trash"></i></a>
+                                    </td>
+                                </tr>';
+    }
+
+    public static function renderCategories($categorie)
+    {
+        return '<tr>
+                                    <td class="w-1/4 text-left py-3 px-4">' . $categorie['categorie_id'] . '</td>
+                                    <td class="w-1/4 text-left py-3 px-4">' . $categorie['categorie_nom'] . '</td>
+                                    <td class="text-left py-3 px-4 flex space-x-2">
+                                        <a class="bg-red-500 text-white px-2 py-1 rounded flex items-center" href="./actions/categorie/delete_categorie.php?id=' . $categorie['categorie_id'] . '"><i class="fas fa-trash"></i></a>
                                     </td>
                                 </tr>';
     }

@@ -2,6 +2,7 @@
 
 use Younes\DriveLoc\Controller\AdminController;
 use Younes\DriveLoc\Config\DBConnection;
+use Younes\DriveLoc\Helpers\Helpers;
 
 
 require_once __DIR__ . '/../../../vendor/autoload.php';
@@ -13,24 +14,9 @@ $admin = new AdminController($db);
 $categorieData = $admin->getCategorie($_GET['id']);
 
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
-    $status = $admin->deleteCategorie($_POST['id']);
+    $status = $admin->deleteCategorie($_GET['id']);
+    Helpers::redirect("http://localhost:63342/DriveLoc/pages/gestionCategorie.php");
 
-    echo $status;
 }
-
-?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Delete Categorie</title>
-</head>
-<body>
-<form action="delete_categorie.php?id=<?php echo $categorieData['categorie_id']; ?>" method="post">
-    <input type="hidden" name="id" value="<?php echo $categorieData['categorie_id']; ?>">
-    <input type="submit" value="Delete Categorie">
-</form>
-</body>
-</html>

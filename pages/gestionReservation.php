@@ -62,7 +62,7 @@ if($_COOKIE['auth_token']) {
                 <i class="fas fa-table mr-1"></i>
                 Gestion des reservation
             </a>
-            <a href="gestionClients.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+            <a href="gestionCategorie.php" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
                 <i class="fas fa-user mr-3"></i>
                 Gestion des Client
             </a>
@@ -122,7 +122,7 @@ if($_COOKIE['auth_token']) {
                     <i class="fas fa-table mr-3"></i>
                     Gestion des reservation
                 </a>
-                <a href="gestionClients.html" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
+                <a href="gestionCategorie.php" class="flex items-center text-white opacity-75 hover:opacity-100 py-2 pl-4 nav-item">
                     <i class="fas fa-user mr-3"></i>
                     Gestion des Client
                 </a>
