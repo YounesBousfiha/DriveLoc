@@ -17,7 +17,6 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     foreach ($cars as $car) {
         $car['fk_user_id'] = $user['user_id'];
-        var_dump($car);
         $admin->createVehicule($car);
     }
 }

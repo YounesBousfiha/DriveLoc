@@ -1,6 +1,7 @@
 <?php
 
 use Younes\DriveLoc\Controller\UserController;
+use Younes\DriveLoc\Model\Avis;
 use Younes\DriveLoc\Helpers\Helpers;
 use Younes\DriveLoc\Config\DBConnection;
 
@@ -15,7 +16,13 @@ $vehicule = $userController->getVehicule($vehicule_id);
 $avis = $userController->getAvisByVehicule($vehicule_id); // TODO: develop this method in AvisController
 
 if(isset($_POST['submit'])) {
-    $userController->createAvis($_POST);
+    $userdata = $userController->validateUser();
+    unset($_POST["submit"]);
+    $_POST['fk_user_id'] = $userdata['user_id'];
+
+    //var_dump($_POST);
+    $newavis = new Avis($_POST['avis_rating'], $_POST['fk_user_id'], $_POST['fk_vehicule_id']);
+    $userController->createAvis($newavis);
 }
 
 
@@ -171,61 +178,70 @@ if(isset($_POST['submit'])) {
 
 
     </section>
+
     <section>
         <div class="flex flex-col justify-center items-center bg-gray-100 p-4">
             <h3>Hello Geek, Provide your Feedback</h3>
+            <?php
+            $vehicule_id = $_GET['id'];
+            ?>
+                <div id="rating" class="flex space-x-2 mb-4">
+                    <!-- SVG Star -->
+                    <svg class="w-8 h-8 text-gray-400 hover:text-yellow-400 cursor-pointer" fill="currentColor"
+                         viewBox="0 0 20 20" data-value="1">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.95 4.146.018c.958.004 1.355 1.226.584
+                     1.818l-3.36 2.455 1.287 3.951c.3.922-.756 1.688-1.541 1.125L10 13.011l-3.353
+                     2.333c-.785.563-1.841-.203-1.541-1.125l1.287-3.951-3.36-2.455c-.77-.592-.374-1.814.584-1.818l4.146-.018
+                     1.286-3.95z" />
+                    </svg>
+                    <svg class="w-8 h-8 text-gray-400 hover:text-yellow-400 cursor-pointer" fill="currentColor"
+                         viewBox="0 0 20 20" data-value="2">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.95 4.146.018c.958.004 1.355 1.226.584
+                     1.818l-3.36 2.455 1.287 3.951c.3.922-.756 1.688-1.541 1.125L10 13.011l-3.353
+                     2.333c-.785.563-1.841-.203-1.541-1.125l1.287-3.951-3.36-2.455c-.77-.592-.374-1.814.584-1.818l4.146-.018
+                     1.286-3.95z" />
+                    </svg>
+                    <svg class="w-8 h-8 text-gray-400 hover:text-yellow-400 cursor-pointer" fill="currentColor"
+                         viewBox="0 0 20 20" data-value="3">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.95 4.146.018c.958.004 1.355 1.226.584
+                     1.818l-3.36 2.455 1.287 3.951c.3.922-.756 1.688-1.541 1.125L10 13.011l-3.353
+                     2.333c-.785.563-1.841-.203-1.541-1.125l1.287-3.951-3.36-2.455c-.77-.592-.374-1.814.584-1.818l4.146-.018
+                     1.286-3.95z" />
+                    </svg>
+                    <svg class="w-8 h-8 text-gray-400 hover:text-yellow-400 cursor-pointer" fill="currentColor"
+                         viewBox="0 0 20 20" data-value="4">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.95 4.146.018c.958.004 1.355 1.226.584
+                     1.818l-3.36 2.455 1.287 3.951c.3.922-.756 1.688-1.541 1.125L10 13.011l-3.353
+                     2.333c-.785.563-1.841-.203-1.541-1.125l1.287-3.951-3.36-2.455c-.77-.592-.374-1.814.584-1.818l4.146-.018
+                     1.286-3.95z" />
+                    </svg>
+                    <svg class="w-8 h-8 text-gray-400 hover:text-yellow-400 cursor-pointer" fill="currentColor"
+                         viewBox="0 0 20 20" data-value="5">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.95 4.146.018c.958.004 1.355 1.226.584
+                     1.818l-3.36 2.455 1.287 3.951c.3.922-.756 1.688-1.541 1.125L10 13.011l-3.353
+                     2.333c-.785.563-1.841-.203-1.541-1.125l1.287-3.951-3.36-2.455c-.77-.592-.374-1.814.584-1.818l4.146-.018
+                     1.286-3.95z" />
+                    </svg>
+                </div>
 
-            <div id="rating" class="flex space-x-2 mb-4">
-                <!-- SVG Star -->
-                <svg class="w-8 h-8 text-gray-400 hover:text-yellow-400 cursor-pointer" fill="currentColor"
-                    viewBox="0 0 20 20" data-value="1">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.95 4.146.018c.958.004 1.355 1.226.584 
-                     1.818l-3.36 2.455 1.287 3.951c.3.922-.756 1.688-1.541 1.125L10 13.011l-3.353 
-                     2.333c-.785.563-1.841-.203-1.541-1.125l1.287-3.951-3.36-2.455c-.77-.592-.374-1.814.584-1.818l4.146-.018 
-                     1.286-3.95z" />
-                </svg>
-                <svg class="w-8 h-8 text-gray-400 hover:text-yellow-400 cursor-pointer" fill="currentColor"
-                    viewBox="0 0 20 20" data-value="2">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.95 4.146.018c.958.004 1.355 1.226.584 
-                     1.818l-3.36 2.455 1.287 3.951c.3.922-.756 1.688-1.541 1.125L10 13.011l-3.353 
-                     2.333c-.785.563-1.841-.203-1.541-1.125l1.287-3.951-3.36-2.455c-.77-.592-.374-1.814.584-1.818l4.146-.018 
-                     1.286-3.95z" />
-                </svg>
-                <svg class="w-8 h-8 text-gray-400 hover:text-yellow-400 cursor-pointer" fill="currentColor"
-                    viewBox="0 0 20 20" data-value="3">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.95 4.146.018c.958.004 1.355 1.226.584 
-                     1.818l-3.36 2.455 1.287 3.951c.3.922-.756 1.688-1.541 1.125L10 13.011l-3.353 
-                     2.333c-.785.563-1.841-.203-1.541-1.125l1.287-3.951-3.36-2.455c-.77-.592-.374-1.814.584-1.818l4.146-.018 
-                     1.286-3.95z" />
-                </svg>
-                <svg class="w-8 h-8 text-gray-400 hover:text-yellow-400 cursor-pointer" fill="currentColor"
-                    viewBox="0 0 20 20" data-value="4">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.95 4.146.018c.958.004 1.355 1.226.584 
-                     1.818l-3.36 2.455 1.287 3.951c.3.922-.756 1.688-1.541 1.125L10 13.011l-3.353 
-                     2.333c-.785.563-1.841-.203-1.541-1.125l1.287-3.951-3.36-2.455c-.77-.592-.374-1.814.584-1.818l4.146-.018 
-                     1.286-3.95z" />
-                </svg>
-                <svg class="w-8 h-8 text-gray-400 hover:text-yellow-400 cursor-pointer" fill="currentColor"
-                    viewBox="0 0 20 20" data-value="5">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.95 4.146.018c.958.004 1.355 1.226.584 
-                     1.818l-3.36 2.455 1.287 3.951c.3.922-.756 1.688-1.541 1.125L10 13.011l-3.353 
-                     2.333c-.785.563-1.841-.203-1.541-1.125l1.287-3.951-3.36-2.455c-.77-.592-.374-1.814.584-1.818l4.146-.018 
-                     1.286-3.95z" />
-                </svg>
-            </div>
+                <!-- Hidden input to store the selected rating -->
+            <form method="POST" action="details.php?id=<?php echo $vehicule_id ; ?>">
+                <input type="hidden" name="avis_rating" id="avis_rating" value="0">
+                <input type="hidden" name="fk_vehicule_id" value="<?php echo $vehicule_id ?>">
 
-            <!-- Display the selected rating -->
-            <div id="rating-text" class="text-lg mb-4">
-                Rating: 0 stars
-            </div>
+                <!-- Display the selected rating -->
+                <div id="rating-text" class="text-lg mb-4">
+                    Rating: 0 stars
+                </div>
 
-            <button id="submit-btn" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
-                Submit Rating
-            </button>
+                <button type="submit" name="submit" id="submit-btn" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">
+                    Submit Rating
+                </button>
 
-            <div id="result" class="mt-4 hidden text-green-600 text-lg font-bold">
-                Thank you! You rated: <span id="submitted-rating">0</span> stars.
-            </div>
+                <div id="result" class="mt-4 hidden text-green-600 text-lg font-bold">
+                    Thank you! You rated: <span id="submitted-rating">0</span> stars.
+                </div>
+            </form>
         </div>
     </section>
 
@@ -340,6 +356,15 @@ if(isset($_POST['submit'])) {
             </div>
         </div>
     </footer>
+    <script>
+        document.querySelectorAll('#rating svg').forEach(star => {
+            star.addEventListener('click', function() {
+                const rating = this.getAttribute('data-value');
+                document.getElementById('avis_rating').value = rating;
+                document.getElementById('rating-text').innerText = `Rating: ${rating} stars`;
+            });
+        });
+    </script>
 </body>
 
 </html>
