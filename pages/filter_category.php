@@ -250,7 +250,7 @@ if($_SERVER['REQUEST_METHOD'] === 'POST') {
         document.getElementById('category-filter').addEventListener('change', function() {
             const categoryId = this.value;
             const xhr = new XMLHttpRequest();
-            xhr.open('POST', '', true);
+            xhr.open('POST', 'filter_data.php', true);
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4 && xhr.status === 200) {
