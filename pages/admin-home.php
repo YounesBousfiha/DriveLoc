@@ -1,3 +1,19 @@
+<?php
+
+use Younes\DriveLoc\Controller\AdminController;
+use Younes\DriveLoc\Config\DBConnection;
+use Younes\DriveLoc\Helpers\Helpers;
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+$db = DBConnection::getConnection()->conn;
+
+$admin = new AdminController($db);
+
+$allStats = $admin->getStats();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -140,7 +156,7 @@
                         </div>
                         <div>
                             <p class="text-lg font-semibold text-gray-700">Reservations</p>
-                            <p class="text-2xl font-bold text-gray-900">150</p>
+                            <p class="text-2xl font-bold text-gray-900"> <?php  echo $allStats['totalReservations'] ?>  </p>
                         </div>
                     </div>
                     <div class="bg-white shadow-lg rounded-lg p-5 flex items-center">
@@ -149,7 +165,7 @@
                         </div>
                         <div>
                             <p class="text-lg font-semibold text-gray-700">Vehicles</p>
-                            <p class="text-2xl font-bold text-gray-900">75</p>
+                            <p class="text-2xl font-bold text-gray-900"> <?php  echo $allStats['totalCars'] ?> </p>
                         </div>
                     </div>
                     <div class="bg-white shadow-lg rounded-lg p-5 flex items-center">
@@ -158,7 +174,7 @@
                         </div>
                         <div>
                             <p class="text-lg font-semibold text-gray-700">Reviews</p>
-                            <p class="text-2xl font-bold text-gray-900">120</p>
+                            <p class="text-2xl font-bold text-gray-900"> <?php  echo $allStats['totalAvis'] ?> </p>
                         </div>
                     </div>
                     <div class="bg-white shadow-lg rounded-lg p-5 flex items-center">
@@ -167,7 +183,7 @@
                         </div>
                         <div>
                             <p class="text-lg font-semibold text-gray-700">Categories</p>
-                            <p class="text-2xl font-bold text-gray-900">10</p>
+                            <p class="text-2xl font-bold text-gray-900"><?php  echo $allStats['totalCategories'] ?></p>
                         </div>
                     </div>
                 </div>

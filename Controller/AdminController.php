@@ -4,7 +4,7 @@ namespace Younes\DriveLoc\Controller;
 
 
 class AdminController {
-    use VehiculeController, CategorieController;
+    use VehiculeController, CategorieController, Stats;
     use AuthController {
         login as public;
         logout as public;
