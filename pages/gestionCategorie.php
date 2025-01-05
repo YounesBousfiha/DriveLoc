@@ -149,7 +149,12 @@ $allCategories = $admin->getAllCategories();
         <div class="w-full h-screen overflow-x-hidden border-t flex flex-col">
             <main class="w-full flex-grow p-6">
                 <h1 class="text-3xl text-black pb-6">Gestion des Clients</h1>
-
+                <div>
+                    <form action="./actions/categorie/create_categorie.php" method="POST">
+                        <input type="text" name="categorie_nom" placeholder="categorie_nom" class="w-full p-2 mb-4 border border-gray-400 rounded">
+                        <button type="submit" class="p-2 bg-blue-600 text-white rounded w-full">Add Categorie</button>
+                    </form>
+                </div>
                 <div class="w-full mt-6">
                     <p class="text-xl pb-3 flex items-center">
                         <i class="fas fa-list mr-3"></i> Client List

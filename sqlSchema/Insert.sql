@@ -11,11 +11,11 @@ INSERT INTO users (nom, prenom, email, password, fk_role_id) VALUES
                                                                  ('Taylor', 'Alex', 'alex.taylor@example.com', 'adminpass', 1); -- Admin
 
 -- Insert categories
-INSERT INTO categories (categorie_nom, fk_user_id) VALUES
-                                                       ('SUV', 1),
-                                                       ('Sedan', 2),
-                                                       ('Truck', 2),
-                                                       ('Electric', 3);
+INSERT INTO categories (categorie_nom) VALUES
+                                                       ('SUV'),
+                                                       ('Sedan'),
+                                                       ('Truck'),
+                                                       ('Electric');
 
 -- Insert vehicules
 INSERT INTO vehicules (vehicule_prix, vehicule_disponibilite, vehicule_marque, vehicule_modele, vehicule_annee, fk_user_id, fk_categorie_id) VALUES

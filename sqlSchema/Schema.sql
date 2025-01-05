@@ -25,9 +25,7 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS categories (
     categorie_id int NOT NULL AUTO_INCREMENT,
     categorie_nom varchar(100),
-    fk_user_id int NOT NULL,
-    PRIMARY KEY(categorie_id),
-    FOREIGN KEY(fk_user_id) REFERENCES users(user_id)
+    PRIMARY KEY(categorie_id)
 );
 
 
