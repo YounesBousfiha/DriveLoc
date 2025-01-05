@@ -92,6 +92,18 @@ trait VehiculeController
         }
     }
 
+    public function countVehiculePerCategory($category_id)
+    {
+        $sql = "SELECT COUNT(*) FROM {$this->tableVehicule} WHERE fk_categorie_id = :category_id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindValue(":category_id", $category_id);
+        if ($stmt->execute()) {
+            return $stmt->fetchColumn();
+        } else {
+            return null;
+        }
+    }
+
     public function vehiculePagination($limit, $offset)
     {
         $sql = "SELECT * FROM {$this->tableVehicule} LIMIT :limit OFFSET :offset";
@@ -104,6 +116,18 @@ trait VehiculeController
             return null;
         }
     }
+
+    public function vehiculesPerCategory($category) {
+        $query = "SELECT * FROM vehicules WHERE fk_categorie_id = :category_id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':category_id', $category);
+        $stmt->execute();
+
+        $results = $stmt->fetchAll();
+
+        return $results;
+    }
+
 }
 
 

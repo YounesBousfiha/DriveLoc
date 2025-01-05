@@ -12,12 +12,22 @@ $user = new UserController($db);
 
 //$allvehicules = $user->getAllVehicules();
 
-$limit = 10;
+$allcategories = $user->getAllCategories();
 
+$category = $_POST['category'] ?? '';
+
+$limit = 10;
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
 $offset = ($page - 1) * $limit;
-$allvehicules = $user->vehiculePagination($limit, $offset);
-$totalVeicules = $user->countVehicule();
+
+if ($category) {
+    $allvehicules = $user->vehiculesPerCategory($category,  $limit, $offset);
+    $totalVeicules = $user->countVehiculePerCategory($category);
+} else {
+    $allvehicules = $user->vehiculePagination($limit, $offset);
+    $totalVeicules = $user->countVehicule();
+}
+
 $totalPages = ceil($totalVeicules / $limit);
 
 
@@ -205,10 +215,9 @@ $totalPages = ceil($totalVeicules / $limit);
                         <div class="relative">
                             <select id="category-filter" class="block w-full sm:max-w-xs p-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                 <option value="">All Categories</option>
-                                <option value="sneakers">Sneakers</option>
-                                <option value="boots">Boots</option>
-                                <option value="hiking">Hiking</option>
-                                <option value="pumps">Pumps</option>
+                                <?php foreach ($allcategories as $category): ?>
+                                    <option value="<?php echo $category['categorie_id']; ?>"><?php echo $category['categorie_nom']; ?></option>
+                                <?php endforeach; ?>
                             </select>
                         </div>
                     </div>

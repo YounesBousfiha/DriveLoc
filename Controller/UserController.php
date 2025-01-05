@@ -11,6 +11,10 @@ class UserController {
     }
     use VehiculeController {
         getAllVehicules as public;
+        countVehiculePerCategory as public;
+    }
+    use CategorieController {
+        getAllCategories as public;
     }
     public function __construct($db) {
         $this->setDb($db);
