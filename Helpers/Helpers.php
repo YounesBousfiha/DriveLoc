@@ -138,14 +138,14 @@ class Helpers
         $user_id = $avis['fk_user_id'];
         $isOwner = $Owner['user_id'] == $user_id;
         return '
-        <div class="flex flex-col items-center bg-white p-4 rounded-lg shadow-md">
+        <div data-id="'. $avis['avis_id'].'" class="flex flex-col items-center bg-white p-4 rounded-lg shadow-md">
             <p id="user-name" class="text-lg font-medium">User: <span class="font-bold">' . $avis['fullname'] . '</span></p>
             <p id="user-rating" class="text-lg font-medium">Rating: <span class="font-bold">' . $avis['avis_rating'] . '</span> stars</p>
             ' . ($isOwner ? '
             <div class="flex space-x-2 mt-2">
-                <a class="bg-yellow-500 text-white px-2 py-1 rounded flex items-center" href="./actions/Avis/update_avis.php?id=' . $avis['avis_id'] . '">
-                    <i class="fas fa-edit"></i>
-                </a>
+                    <button type="submit" onclick="SetAvisid(this)" data-modal-target="EditAvis" data-modal-toggle="EditAvis" class="bg-yellow-500 text-white px-2 py-1 rounded flex items-center">
+                        <i class="fas fa-edit"></i>
+                    </button>
                 <a class="bg-red-500 text-white px-2 py-1 rounded flex items-center" href="./actions/Avis/delete_avis.php?id=' . $avis['avis_id'] . '">
                     <i class="fas fa-trash"></i>
                 </a>
