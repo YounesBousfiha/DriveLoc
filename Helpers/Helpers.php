@@ -58,4 +58,27 @@ class Helpers {
                 </td>
             </tr>';
     }
+
+    public static function renderReservationForAdmin($reservation) {
+        return '<tr>
+                                    <td class="w-1/4 text-left py-3 ">' . $reservation['email'] . '</td>
+                                    <td class="w-1/4 text-left py-3 px-4">' . $reservation['vehicule_marque'] . '</td>
+                                    <td class="w-1/4 text-left py-3 px-4">$' . $reservation['vehicule_prix'] . '</td>
+                                    <td class="text-left py-3 px-4">' . $reservation['categorie_nom'] . '</td>
+                                    <td class="w-1/4 text-left py-3 px-4">' . $reservation['reservation_date'] . '</td>
+                                    <td class="w-1/4 text-left py-3 px-4">' . $reservation['reservation_lieux'] . '</td>
+                                    <td class="w-1/4 text-left py-3 px-4">
+                                        <span class="' . ($reservation['reservation_status'] == 'Pending' ? 'bg-yellow-200 text-yellow-800' : ($reservation['reservation_status'] == 'Approuve' ? 'bg-green-200 text-green-800' : 'bg-red-200 text-red-800')) . ' text-white px-2 py-1 rounded-xl">
+                        ' . $reservation['reservation_status'] . '</span>
+                                    </td>
+                                    <td class="text-left py-3 px-4 flex space-x-2">
+                                        <button class="bg-green-500 text-white px-2 py-1 rounded flex items-center">
+                                            <i class="fas fa-check"></i> <a href="./actions/reservation/approuve_reservation.php?id=' . $reservation['reservation_id'] . '">Approuver</a>
+                                        </button>
+                                        <button class="bg-red-500 text-white px-2 py-1 rounded flex items-center">
+                                            <i class="fas fa-times"></i> <a href="./actions/reservation/reject_reservation.php?id=' . $reservation['reservation_id'] .'">Reject</a>
+                                        </button>
+                                    </td>
+                                </tr>';
+    }
 }

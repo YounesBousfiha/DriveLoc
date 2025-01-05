@@ -59,4 +59,14 @@ trait ReservationController
         }
     }
 
+    public function getReservationForAdmin() {
+        $sql = "SELECT * FROM ReservationForAdmin";
+        $stmt = $this->db->prepare($sql);
+        if($stmt->execute()) {
+            return $stmt->fetchAll();
+        } else {
+            return null;
+        }
+    }
+
 }

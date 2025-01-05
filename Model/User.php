@@ -8,7 +8,7 @@ class User {
     private $prenom;
     private $email;
     private $password;
-    public $fk_role_id = 2;
+    public $fk_role_id = 1;
 
     public function __construct($nom, $prenom, $email, $password) {
         $this->nom = $nom;

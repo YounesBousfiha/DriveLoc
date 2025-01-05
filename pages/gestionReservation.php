@@ -1,3 +1,25 @@
+<?php
+
+use Younes\DriveLoc\Controller\AdminController;
+use Younes\DriveLoc\Config\DBConnection;
+use Younes\DriveLoc\Helpers\Helpers;
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+$db = DBConnection::getConnection()->conn;
+
+$admin = new AdminController($db);
+if($_COOKIE['auth_token']) {
+    $userData = $admin->validateUser();
+    if($userData['fk_role_id'] !== 1) {
+        Helpers::redirect('http://localhost:63342/DriveLoc/index.php');
+    }
+} else {
+    Helpers::redirect('http://localhost:63342/DriveLoc/index.php');
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -142,63 +164,26 @@
                         <table class="min-w-full bg-white">
                             <thead class="bg-gray-800 text-white">
                                 <tr>
-                                    <th class="w-1/4 text-left py-3 px-4 uppercase font-semibold text-sm">Email</th>
-                                    <th class="w-1/4 text-left py-3 px-4 uppercase font-semibold text-sm">Reservation Date</th>
-                                    <th class="w-1/4 text-left py-3 px-4 uppercase font-semibold text-sm">Lieux de Prise en Charge</th>
-                                    <th class="w-1/4 text-left py-3 px-4 uppercase font-semibold text-sm">Status</th>
-                                    <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Actions</th>
+                                    <th class="w-1/4 text-left py-3 px-4 uppercase font-semibold text-base">Email</th>
+                                    <th class="w-1/4 text-left py-3 px-4 uppercase font-semibold text-base">Marque</th>
+                                    <th class="w-1/4 text-left py-3 px-4 uppercase font-semibold text-base">Prix</th>
+                                    <th class="text-left py-3 px-4 uppercase font-semibold text-base">Categorie</th>
+                                    <th class="w-1/4 text-left py-3 px-4 uppercase font-semibold text-base">Date</th>
+                                    <th class="w-1/4 text-left py-3 px-4 uppercase font-semibold text-base">Lieu</th>
+                                    <th class="w-1/4 text-left py-3 px-4 uppercase font-semibold text-base">Status</th>
+                                    <th class="text-left py-3 px-4 uppercase font-semibold text-base">Actions</th>
                                 </tr>
                             </thead>
                             <tbody class="text-gray-700">
                                 <!-- ...existing rows... -->
-                                <tr>
-                                    <td class="w-1/4 text-left py-3 px-4">john.doe@example.com</td>
-                                    <td class="w-1/4 text-left py-3 px-4">2023-10-01</td>
-                                    <td class="w-1/4 text-left py-3 px-4">Paris</td>
-                                    <td class="w-1/4 text-left py-3 px-4">
-                                        <span class="bg-yellow-500 text-white px-2 py-1 rounded-xl">Pending</span>
-                                    </td>
-                                    <td class="text-left py-3 px-4 flex space-x-2">
-                                        <button class="bg-green-500 text-white px-2 py-1 rounded flex items-center">
-                                            <i class="fas fa-check"></i> Approve
-                                        </button>
-                                        <button class="bg-red-500 text-white px-2 py-1 rounded flex items-center">
-                                            <i class="fas fa-times"></i> Reject
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="w-1/4 text-left py-3 px-4">jane.doe@example.com</td>
-                                    <td class="w-1/4 text-left py-3 px-4">2023-10-02</td>
-                                    <td class="w-1/4 text-left py-3 px-4">Lyon</td>
-                                    <td class="w-1/4 text-left py-3 px-4">
-                                        <span class="bg-green-500 text-white px-2 py-1 rounded-xl">Approved</span>
-                                    </td>
-                                    <td class="text-left py-3 px-4 flex space-x-2">
-                                        <button class="bg-green-500 text-white px-2 py-1 rounded flex items-center">
-                                            <i class="fas fa-check"></i> Approve
-                                        </button>
-                                        <button class="bg-red-500 text-white px-2 py-1 rounded flex items-center">
-                                            <i class="fas fa-times"></i> Reject
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="w-1/4 text-left py-3 px-4">mark.smith@example.com</td>
-                                    <td class="w-1/4 text-left py-3 px-4">2023-10-03</td>
-                                    <td class="w-1/4 text-left py-3 px-4">Marseille</td>
-                                    <td class="w-1/4 text-left py-3 px-4">
-                                        <span class="bg-red-500 text-white px-2 py-1 rounded-xl">Rejected</span>
-                                    </td>
-                                    <td class="text-left py-3 px-4 flex space-x-2">
-                                        <button class="bg-green-500 text-white px-2 py-1 rounded flex items-center">
-                                            <i class="fas fa-check"></i> Approve
-                                        </button>
-                                        <button class="bg-red-500 text-white px-2 py-1 rounded flex items-center">
-                                            <i class="fas fa-times"></i> Reject
-                                        </button>
-                                    </td>
-                                </tr>
+                                <?php
+
+                                $reservations = $admin->getReservationForAdmin();
+                                foreach ($reservations as $reservation) {
+                                    echo Helpers::renderReservationForAdmin($reservation);
+                                }
+
+                                ?>
                                 <!-- ...existing rows... -->
                             </tbody>
                         </table>
