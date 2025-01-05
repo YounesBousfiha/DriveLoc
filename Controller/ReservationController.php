@@ -27,8 +27,11 @@ trait ReservationController
     {
         $columns = implode(",", array_keys(get_object_vars($data)));
         $placeholders = ":" . implode(", :", array_keys(get_object_vars($data)));
-        $sql = "INSERT INTO {$this->tableReservation} ({$columns}) VALUES ({$placeholders})";
+        $sql = "CALL CreateReservation(:columns, :placeholders)";
         $stmt = $this->db->prepare($sql);
+
+        $stmt->bindValue(":columns", $columns);
+        $stmt->bindValue(":placeholders", $placeholders);
 
         foreach ($data as $key => $value) {
             $stmt->bindValue(":{$key}", $value);
