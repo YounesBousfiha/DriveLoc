@@ -25,19 +25,13 @@ trait ReservationController
 
     public function createReservation($data)
     {
-        $columns = implode(",", array_keys(get_object_vars($data)));
-        $placeholders = ":" . implode(", :", array_keys(get_object_vars($data)));
-        $sql = "CALL CreateReservation(:columns, :placeholders)";
-        $stmt = $this->db->prepare($sql);
-
-        $stmt->bindValue(":columns", $columns);
-        $stmt->bindValue(":placeholders", $placeholders);
-
-        foreach ($data as $key => $value) {
-            $stmt->bindValue(":{$key}", $value);
-        }
-
-        return $stmt->execute();
+        $sql = "CALL AjouterReservation(:reservation_date, :reservation_lieux, :fk_user_id, :fk_vehicule_id)";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':reservation_date', $data->reservation_date);
+            $stmt->bindParam(':reservation_lieux', $data->reservation_lieux);
+            $stmt->bindParam(':fk_user_id', $data->fk_user_id);
+            $stmt->bindParam(':fk_vehicule_id', $data->fk_vehicule_id);
+            return $stmt->execute();
     }
 
     public function getAllReservations()
