@@ -10,7 +10,18 @@ $db = DBConnection::getConnection()->conn;
 
 $user = new UserController($db);
 
-$allvehicules = $user->getAllVehicules();
+//$allvehicules = $user->getAllVehicules();
+
+$limit = 10;
+
+$page = isset($_GET['page']) ? $_GET['page'] : 1;
+$offset = ($page - 1) * $limit;
+$allvehicules = $user->vehiculePagination($limit, $offset);
+$totalVeicules = $user->countVehicule();
+$totalPages = ceil($totalVeicules / $limit);
+
+
+
 
 ?>
 <!DOCTYPE html>
@@ -219,38 +230,21 @@ $allvehicules = $user->getAllVehicules();
     <section class="bg-gray-100">
         <div class="py-6">
             <ul class="flex space-x-5 justify-center font-[sans-serif]">
-                <li
-                    class="flex items-center justify-center shrink-0 cursor-pointer text-base font-bold text-blue-600 h-9 rounded-md">
-                    Prev
-                </li>
-                <li
-                    class="flex items-center justify-center shrink-0 hover:bg-gray-50  border-2 cursor-pointer text-base font-bold text-gray-800 px-[13px] h-9 rounded-md">
-                    1
-                </li>
-                <li
-                    class="flex items-center justify-center shrink-0 bg-blue-500  border-2 border-blue-500 cursor-pointer text-base font-bold text-white px-[13px] h-9 rounded-md">
-                    2
-                </li>
-                <li
-                    class="flex items-center justify-center shrink-0 hover:bg-gray-50  border-2 cursor-pointer text-base font-bold text-gray-800 px-[13px] h-9 rounded-md">
-                    3
-                </li>
-                <li
-                    class="flex items-center justify-center shrink-0 hover:bg-gray-50  border-2 cursor-pointer text-base font-bold text-gray-800 px-[13px] h-9 rounded-md">
-                    4
-                </li>
-                <li
-                    class="flex items-center justify-center shrink-0 hover:bg-gray-50  border-2 cursor-pointer text-base font-bold text-gray-800 px-[13px] h-9 rounded-md">
-                    5
-                </li>
-                <li
-                    class="flex items-center justify-center shrink-0 hover:bg-gray-50  border-2 cursor-pointer text-base font-bold text-gray-800 px-[13px] h-9 rounded-md">
-                    6
-                </li>
-                <li
-                    class="flex items-center justify-center shrink-0 cursor-pointer text-base font-bold text-blue-600 h-9 rounded-md">
-                    Next
-                </li>
+                <?php if ($page > 1): ?>
+                    <li class="flex items-center justify-center shrink-0 cursor-pointer text-base font-bold text-blue-600 h-9 rounded-md">
+                        <a href="?page=<?php echo $page - 1; ?>">Prev</a>
+                    </li>
+                <?php endif; ?>
+                <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                    <li class="flex items-center justify-center shrink-0 <?php echo $i == $page ? 'bg-blue-500 text-white' : 'hover:bg-gray-50 text-gray-800'; ?> border-2 cursor-pointer text-base font-bold px-[13px] h-9 rounded-md">
+                        <a href="?page=<?php echo $i; ?>"><?php echo $i; ?></a>
+                    </li>
+                <?php endfor; ?>
+                <?php if ($page < $totalPages): ?>
+                    <li class="flex items-center justify-center shrink-0 cursor-pointer text-base font-bold text-blue-600 h-9 rounded-md">
+                        <a href="?page=<?php echo $page + 1; ?>">Next</a>
+                    </li>
+                <?php endif; ?>
             </ul>
         </div>
     </section>
