@@ -117,4 +117,16 @@ class Helpers
                                     </td>
                                 </tr>';
     }
+
+    public static function renderAvisForAdmin($avis)
+    {
+        return '                                <tr>
+                                    <td class="w-1/8 text-left py-3 px-4">' . $avis['prenom'] . '</td>
+                                    <td class="w-1/8 text-left py-3 px-4">' . $avis['nom'] . '</td>
+                                    <td class="w-1/8 text-left py-3 px-4">' . $avis['email'] . '</td>
+                                    <td class="w-1/8 text-left py-3 px-4">$' . $avis['vehicule_prix'] . '</td>
+                                    <td class="w-1/8 text-left py-3 px-4">' . $avis['vehicule_marque'] . '</td>
+                                    <td class="w-1/8 text-left py-3 px-4">' . $avis['avis_rating'] . '</td>
+                                </tr>';
+    }
 }

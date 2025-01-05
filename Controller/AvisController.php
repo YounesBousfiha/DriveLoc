@@ -49,5 +49,15 @@ trait AvisController
         }
     }
 
+    public function getAvisForAdmin() {
+        $sql = "SELECT * FROM AvisForAdmin";
+        $stmt = $this->db->prepare($sql);
+        if($stmt->execute()) {
+            return $stmt->fetchAll();
+        } else {
+            return null;
+        }
+    }
+
 
 }

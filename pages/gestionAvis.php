@@ -1,3 +1,17 @@
+<?php
+
+use Younes\DriveLoc\Controller\AdminController;
+use Younes\DriveLoc\Helpers\Helpers;
+use Younes\DriveLoc\Config\DBConnection;
+
+require_once __DIR__ . '/../vendor/autoload.php';
+$db = DBConnection::getConnection()->conn;
+
+$admin = new AdminController($db);
+$avis = $admin->getAllAvis();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -144,7 +158,6 @@
                                     <th class="w-1/8 text-left py-3 px-4 uppercase font-semibold text-sm">Nom</th>
                                     <th class="w-1/8 text-left py-3 px-4 uppercase font-semibold text-sm">Prenom</th>
                                     <th class="w-1/8 text-left py-3 px-4 uppercase font-semibold text-sm">Email</th>
-                                    <th class="w-1/8 text-left py-3 px-4 uppercase font-semibold text-sm">Reservation Date</th>
                                     <th class="w-1/8 text-left py-3 px-4 uppercase font-semibold text-sm">Prix</th>
                                     <th class="w-1/8 text-left py-3 px-4 uppercase font-semibold text-sm">Vehicule</th>
                                     <th class="w-1/8 text-left py-3 px-4 uppercase font-semibold text-sm">Rating</th>
@@ -152,15 +165,12 @@
                             </thead>
                             <tbody class="text-gray-700">
                                 <!-- ...existing rows... -->
-                                <tr>
-                                    <td class="w-1/8 text-left py-3 px-4">John</td>
-                                    <td class="w-1/8 text-left py-3 px-4">Doe</td>
-                                    <td class="w-1/8 text-left py-3 px-4">john.doe@example.com</td>
-                                    <td class="w-1/8 text-left py-3 px-4">2023-10-01</td>
-                                    <td class="w-1/8 text-left py-3 px-4">$20,000</td>
-                                    <td class="w-1/8 text-left py-3 px-4">Corolla</td>
-                                    <td class="w-1/8 text-left py-3 px-4">5</td>
-                                </tr>
+                                <?php
+                                $adminAvis = $admin->getAvisForAdmin();
+                                foreach ($adminAvis as $avis) {
+                                    echo Helpers::renderAvisForAdmin($avis);
+                                }
+                                ?>
                                 <!-- ...existing rows... -->
                             </tbody>
                         </table>

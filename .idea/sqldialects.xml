@@ -2,6 +2,7 @@
 <project version="4">
   <component name="SqlDialectMappings">
     <file url="file://$PROJECT_DIR$/Controller/AuthController.php" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/Controller/AvisController.php" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/sqlSchema/Insert.sql" dialect="GenericSQL" />
     <file url="file://$PROJECT_DIR$/sqlSchema/Schema.sql" dialect="MySQL" />
   </component>
