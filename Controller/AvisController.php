@@ -60,7 +60,7 @@ trait AvisController
     }
 
     public function getAvisByVehicule($vehicule_id) {
-        $sql = "SELECT * FROM {$this->tableAvis} WHERE fk_vehicule_id = :vehicule_id";
+        $sql = "SELECT * FROM AvisForVehicule WHERE fk_vehicule_id = :vehicule_id AND is_deleted = 0";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':vehicule_id', $vehicule_id);
         if($stmt->execute()) {

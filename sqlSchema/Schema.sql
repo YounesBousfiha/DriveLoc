@@ -66,3 +66,9 @@ CREATE TABLE IF NOT EXISTS avis (
     FOREIGN KEY(fk_user_id) REFERENCES users(user_id),
     FOREIGN KEY(fk_vehicule_id) REFERENCES vehicules(vehicule_id)
 );
+
+-- Views
+CREATE VIEW AvisForVehicule as
+SELECT CONCAT(U.prenom, ' ', U.nom) AS fullname, A.avis_rating, A.fk_vehicule_id, A.is_deleted
+FROM avis A
+         JOIN users U ON A.fk_user_id = U.user_id
